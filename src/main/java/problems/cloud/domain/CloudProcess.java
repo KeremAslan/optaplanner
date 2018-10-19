@@ -3,7 +3,7 @@ package problems.cloud.domain;
 import org.optaplanner.core.api.domain.entity.PlanningEntity;
 import org.optaplanner.core.api.domain.variable.PlanningVariable;
 
-@PlanningEntity
+@PlanningEntity(difficultyComparatorClass = CloudProcessDifficultyComparison.class)
 public class CloudProcess {
 
     private long id;
