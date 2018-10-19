@@ -22,25 +22,43 @@ public class CloudBalanceApp {
 
         Solver<CloudBalance> solver = solverFactory.buildSolver();
 
-        CloudBalance cloudBalance = new CloudBalanceGenerator().createCloudBalance(50, 30);
+        CloudBalance cloudBalance = new CloudBalanceGenerator().createCloudBalance(10, 100);
+
+        HardSoftScore initScore = cloudBalance.getScore();
+
+        System.out.println("Initial sore is " + initScore);
 
         CloudBalance solution = solver.solve(cloudBalance);
 
         HardSoftScore score = solution.getScore();
 
         System.out.println("Total score is " + score);
-
-        for(CloudProcess process: solution.getProcessList()){
-            CloudComputer computer = process.getComputer();
-            System.out.println("Process "+ process + " is assigned to " + computer);
-        }
-
         System.out.println("-------------------------------------------");
 
         Map<CloudComputer, List<CloudProcess>> grouped = groupAssignments(solution);
+        printSolution(grouped);
+        System.out.println("-------------------------------------------");
+
+
+//        System.out.println(solver.explainBestScore());
+    }
+
+    public static void printSolution(Map<CloudComputer, List<CloudProcess>> grouped){
 
         for(Map.Entry<CloudComputer, List<CloudProcess>> entry: grouped.entrySet()){
-            System.out.println("Computer " + entry.getKey().getId() + " has processes " + entry.getValue().size()+ " "  +entry.getValue());
+            System.out.println("Computer " + entry.getKey());
+            int consumedCPUPower = 0;
+            int consumedRAM = 0;
+            int consumedNetworkBandwidth = 0;
+            for(CloudProcess cloudProcess: entry.getValue()){
+                System.out.println("\t" + cloudProcess);
+                consumedCPUPower += cloudProcess.getRequiredCpuPower();
+                consumedRAM += cloudProcess.getRequiredMemory();
+                consumedNetworkBandwidth += cloudProcess.getRequiredNetworkBandwidth();
+            }
+            System.out.println("Total CPU consumed: " + consumedCPUPower +
+                    " Total RAM consumed "+ consumedRAM +
+                    " Total networkbandwidth consumed " + consumedNetworkBandwidth);
         }
     }
 

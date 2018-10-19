@@ -12,4 +12,8 @@
         <secondsSpentLimit>15</secondsSpentLimit>
     </termination>
 
+    <constructionHeuristic>
+        <constructionHeuristicType>FIRST_FIT_DECREASING</constructionHeuristicType>
+    </constructionHeuristic>
+
 </solver>
