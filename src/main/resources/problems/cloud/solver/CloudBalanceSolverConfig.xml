@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<solver>
+    <solutionClass>problems.cloud.domain.CloudBalance</solutionClass>
+    <entityClass>problems.cloud.domain.CloudProcess</entityClass>
+    <!--<entityClass>problems.cloud.domain.CloudComputer</entityClass>-->
+
+    <scoreDirectorFactory>
+        <easyScoreCalculatorClass>problems.cloud.score.EasyCalculator</easyScoreCalculatorClass>
+    </scoreDirectorFactory>
+
+    <termination>
+        <secondsSpentLimit>15</secondsSpentLimit>
+    </termination>
+
+</solver>
