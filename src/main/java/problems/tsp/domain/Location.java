@@ -1,6 +1,5 @@
 package problems.tsp.domain;
 
-import org.optaplanner.core.api.domain.entity.PlanningEntity;
 
 public class Location {
 
@@ -14,5 +13,17 @@ public class Location {
         this.latitude = latitude;
     }
 
+
+    public int getId() {
+        return id;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
 
 }
