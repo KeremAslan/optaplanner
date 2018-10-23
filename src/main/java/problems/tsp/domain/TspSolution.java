@@ -5,6 +5,7 @@ import org.optaplanner.core.api.domain.solution.PlanningScore;
 import org.optaplanner.core.api.domain.solution.PlanningSolution;
 import org.optaplanner.core.api.domain.solution.drools.ProblemFactCollectionProperty;
 import org.optaplanner.core.api.domain.valuerange.ValueRangeProvider;
+import org.optaplanner.core.api.score.Score;
 import org.optaplanner.core.api.score.buildin.hardsoft.HardSoftScore;
 import org.optaplanner.core.api.score.buildin.simplebigdecimal.SimpleBigDecimalScore;
 
@@ -18,7 +19,8 @@ public class TspSolution {
 
     private List<Assignment> assignments;
 
-    private SimpleBigDecimalScore score;
+//    private SimpleBigDecimalScore score;
+    private HardSoftScore score;
 
     public TspSolution(){
 
@@ -41,11 +43,11 @@ public class TspSolution {
     }
 
     @PlanningScore
-    public SimpleBigDecimalScore getScore() {
+    public HardSoftScore getScore() {
         return score;
     }
 
-    public void setScore(SimpleBigDecimalScore score){
+    public void setScore(HardSoftScore score){
         this.score = score;
     }
 }

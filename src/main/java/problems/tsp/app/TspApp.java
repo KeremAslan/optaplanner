@@ -1,6 +1,7 @@
 package problems.tsp.app;
 
 import org.optaplanner.core.api.score.Score;
+import org.optaplanner.core.api.score.buildin.hardsoft.HardSoftScore;
 import org.optaplanner.core.api.score.buildin.simplebigdecimal.SimpleBigDecimalScore;
 import org.optaplanner.core.api.solver.Solver;
 import org.optaplanner.core.api.solver.SolverFactory;
@@ -28,9 +29,9 @@ public class TspApp {
         }
 
         TspSolution solution = solver.solve(problem);
-        Score score = solution.getScore();
+        HardSoftScore score = solution.getScore();
 
-        System.out.println("Score is " + ((SimpleBigDecimalScore) score).getScore());
+        System.out.println("HardScore is " + score.getHardScore() + " soft score is "+ score.getSoftScore());
         for(Assignment assignment: solution.getAssignments()){
             System.out.println(assignment);
         }

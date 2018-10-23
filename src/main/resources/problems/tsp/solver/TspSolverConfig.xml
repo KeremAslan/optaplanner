@@ -10,4 +10,7 @@
 
     <constructionHeuristic>FIRST_FIT_DECREASING</constructionHeuristic>
 
+    <!--<termination>-->
+        <!--<secondsSpentLimit>15</secondsSpentLimit>-->
+    <!--</termination>-->
 </solver>
