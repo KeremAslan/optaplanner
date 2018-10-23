@@ -25,4 +25,10 @@ public class Location {
         return latitude;
     }
 
+    @Override
+    public String toString() {
+        return "Location{" +
+                "id=" + id +
+                '}';
+    }
 }

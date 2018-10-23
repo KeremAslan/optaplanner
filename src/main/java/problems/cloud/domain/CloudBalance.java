@@ -8,7 +8,7 @@ import org.optaplanner.core.api.domain.solution.drools.ProblemFactCollectionProp
 import org.optaplanner.core.api.domain.valuerange.ValueRangeProvider;
 import org.optaplanner.core.api.score.buildin.hardsoft.HardSoftScore;
 import problems.cloud.score.SimpleScore;
-import sun.java2d.pipe.SpanShapeRenderer;
+
 
 import java.util.List;
 

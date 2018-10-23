@@ -8,4 +8,6 @@
         <easyScoreCalculatorClass>problems.tsp.score.EasyCalculator</easyScoreCalculatorClass>
     </scoreDirectorFactory>
 
+    <constructionHeuristic>FIRST_FIT_DECREASING</constructionHeuristic>
+
 </solver>
