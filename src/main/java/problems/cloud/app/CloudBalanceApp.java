@@ -22,7 +22,7 @@ public class CloudBalanceApp {
 
         Solver<CloudBalance> solver = solverFactory.buildSolver();
 
-        CloudBalance cloudBalance = new CloudBalanceGenerator().createCloudBalance(10, 100);
+        CloudBalance cloudBalance = new CloudBalanceGenerator().createCloudBalance(20, 100);
 
         HardSoftScore initScore = cloudBalance.getScore();
 
@@ -36,7 +36,7 @@ public class CloudBalanceApp {
         System.out.println("-------------------------------------------");
 
         Map<CloudComputer, List<CloudProcess>> grouped = groupAssignments(solution);
-        printSolution(grouped);
+//        printSolution(grouped);
         System.out.println("-------------------------------------------");
 
 

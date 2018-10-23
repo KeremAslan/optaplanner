@@ -13,7 +13,6 @@ public class Location {
         this.latitude = latitude;
     }
 
-
     public int getId() {
         return id;
     }

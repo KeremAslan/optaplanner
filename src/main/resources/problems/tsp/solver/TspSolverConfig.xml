@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <solver>
-    <!--<scanAnnotatedClasses>-->
-        <!--<packageInclude>src.main.java.problems.tsp</packageInclude>-->
-    <!--</scanAnnotatedClasses>-->
+    <solutionClass>problems.tsp.domain.TspSolution</solutionClass>
+    <entityClass>problems.tsp.domain.Assignment</entityClass>
+    <!--<entityClass>problems.tsp.domain.Location</entityClass>-->
+
+    <scoreDirectorFactory>
+        <easyScoreCalculatorClass>problems.tsp.score.EasyCalculator</easyScoreCalculatorClass>
+    </scoreDirectorFactory>
+
 </solver>
