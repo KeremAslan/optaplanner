@@ -25,7 +25,7 @@ public class TspApp {
 
         TspSolution problem = TspProblemGenerator.createTspProblem(TspProblemGenerator.Dataset.WESTERN_SAHARA);
 
-        System.out.println("# of assignments created " + problem.getAssignments());
+        System.out.println("# of assignments created " + problem.getAssignments().size());
 
         TspSolution solution = solver.solve(problem);
         HardSoftScore score = solution.getScore();

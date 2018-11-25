@@ -4,13 +4,16 @@
     <entityClass>problems.tsp.domain.Assignment</entityClass>
     <!--<entityClass>problems.tsp.domain.Location</entityClass>-->
 
+
+
     <scoreDirectorFactory>
         <easyScoreCalculatorClass>problems.tsp.score.EasyCalculator</easyScoreCalculatorClass>
     </scoreDirectorFactory>
 
-    <constructionHeuristic>FIRST_FIT_DECREASING</constructionHeuristic>
+    <!--<constructionHeuristic>FIRST_FIT_DECREASING</constructionHeuristic>-->
 
-    <!--<termination>-->
-        <!--<secondsSpentLimit>15</secondsSpentLimit>-->
-    <!--</termination>-->
+
+    <termination>
+        <secondsSpentLimit>15</secondsSpentLimit>
+    </termination>
 </solver>

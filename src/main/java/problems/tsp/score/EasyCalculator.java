@@ -16,40 +16,79 @@ import java.util.Set;
 
 public class EasyCalculator implements EasyScoreCalculator<TspSolution> {
 
-    public Score calculateScore(TspSolution tspSolution) {
-//        BigDecimal softscore = new BigDecimal(0);
-        Set<Location> univistedLocations = new HashSet<>(tspSolution.getLocations());
+//    public Score calculateScore(TspSolution tspSolution) {
+////        BigDecimal softscore = new BigDecimal(0);
+//        Set<Location> univistedLocations = new HashSet<>(tspSolution.getLocations());
+//
+//        int hardscore = 0;
+//        int softscore = 0;
+//        List<Assignment> assignments = tspSolution.getAssignments();
+//
+//        Set<Location> visitedLocations = new HashSet<>();
+//
+//        for(int i=0; i < tspSolution.getAssignments().size()-1; i++){
+//
+//            Location location = tspSolution.getAssignments().get(i).getLocation();
+//            visitedLocations.add(location);
+//
+//            if(location == null) {
+//                hardscore++;
+//            } else if(visitedLocations.contains(location)){
+//                hardscore++;
+//            } else {
+//                if(i == tspSolution.getAssignments().size()){
+//                    break;
+//                }
+//
+//                Location nextLocation = tspSolution.getAssignments().get(i+1).getLocation();
+//                if(nextLocation ==null) {
+//                    hardscore++;
+//                } else {
+//                    System.out.println(location + "-" +  nextLocation);
+//                    softscore += calculateDistance(location, nextLocation);
+//                }
+//
+//            }
+//        }
+//
+//        return HardSoftScore.valueOf(hardscore, -softscore);
+//    }
 
-        int hardscore = 0;
-        int softscore = 0;
-        List<Assignment> assignments = tspSolution.getAssignments();
+
+    @Override
+    public Score calculateScore(TspSolution tspSolution) {
+        int hardScore = 0;
+        double softscore = 0;
 
         Set<Location> visitedLocations = new HashSet<>();
+        for(int i =0; i < tspSolution.getAssignments().size()-1; i++) {
+            Assignment currentAssignment = tspSolution.getAssignments().get(i);
+            Location currentLocation = currentAssignment.getLocation();
 
-        for(int i=0; i < tspSolution.getAssignments().size()-1; i++){
-            Location location = tspSolution.getAssignments().get(i).getLocation();
+            Assignment nextAssignment = tspSolution.getAssignments().get(i+1);
+            Location nextLocaton = nextAssignment.getLocation();
 
-            if(location == null) {
-                hardscore++;
-            } else if(visitedLocations.contains(location)){
-                hardscore++;
-            } else {
-                if(i == tspSolution.getAssignments().size()){
-                    break;
-                }
-
-                Location nextLocation = tspSolution.getAssignments().get(i+1).getLocation();
-                if(nextLocation ==null) {
-                    hardscore++;
-                } else {
-                    System.out.println(location + "-" +  nextLocation);
-                    softscore += calculateDistance(location, nextLocation);
-                }
-
+            if(currentLocation==null || nextLocaton == null){
+                hardScore++;
+                continue;
             }
+
+            if(visitedLocations.contains(currentLocation)) {
+                hardScore++;
+            }
+
+            visitedLocations.add(currentLocation);
+
+
+
+
+//            System.out.println(currentLocation+ " -- " + nextLocaton );
+            softscore -= calculateDistance(currentLocation, nextLocaton);
+
+
         }
 
-        return HardSoftScore.valueOf(hardscore, softscore);
+        return HardSoftScore.valueOf(-hardScore, (int) -softscore);
     }
 
     private double calculateDistance(Location loc1, Location loc2){
