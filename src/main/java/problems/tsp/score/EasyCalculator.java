@@ -16,79 +16,52 @@ import java.util.Set;
 
 public class EasyCalculator implements EasyScoreCalculator<TspSolution> {
 
-//    public Score calculateScore(TspSolution tspSolution) {
-////        BigDecimal softscore = new BigDecimal(0);
-//        Set<Location> univistedLocations = new HashSet<>(tspSolution.getLocations());
-//
-//        int hardscore = 0;
-//        int softscore = 0;
-//        List<Assignment> assignments = tspSolution.getAssignments();
-//
-//        Set<Location> visitedLocations = new HashSet<>();
-//
-//        for(int i=0; i < tspSolution.getAssignments().size()-1; i++){
-//
-//            Location location = tspSolution.getAssignments().get(i).getLocation();
-//            visitedLocations.add(location);
-//
-//            if(location == null) {
-//                hardscore++;
-//            } else if(visitedLocations.contains(location)){
-//                hardscore++;
-//            } else {
-//                if(i == tspSolution.getAssignments().size()){
-//                    break;
-//                }
-//
-//                Location nextLocation = tspSolution.getAssignments().get(i+1).getLocation();
-//                if(nextLocation ==null) {
-//                    hardscore++;
-//                } else {
-//                    System.out.println(location + "-" +  nextLocation);
-//                    softscore += calculateDistance(location, nextLocation);
-//                }
-//
-//            }
-//        }
-//
-//        return HardSoftScore.valueOf(hardscore, -softscore);
-//    }
-
 
     @Override
+    //Note: OptaPlanner's default configuration is to maximize any function.
+    // So a minimization problem involves negative score ( and constraints)
     public Score calculateScore(TspSolution tspSolution) {
         int hardScore = 0;
-        double softscore = 0;
+        int softscore = 0;
 
         Set<Location> visitedLocations = new HashSet<>();
-        for(int i =0; i < tspSolution.getAssignments().size()-1; i++) {
-            Assignment currentAssignment = tspSolution.getAssignments().get(i);
-            Location currentLocation = currentAssignment.getLocation();
+        for(int i =0; i < tspSolution.getAssignments().size(); i++) {
+            Assignment currentAssignment;
+            Location currentLocation;
+            Assignment nextAssignment;
+            Location nextLocation;
+            // close loop if end of route
+            if(i == tspSolution.getAssignments().size()-1) {
+                currentAssignment = tspSolution.getAssignments().get(i);
+                nextAssignment = tspSolution.getAssignments().get(0);
+            } else {
+                currentAssignment = tspSolution.getAssignments().get(i);
+                nextAssignment = tspSolution.getAssignments().get(i+1);
+            }
 
-            Assignment nextAssignment = tspSolution.getAssignments().get(i+1);
-            Location nextLocaton = nextAssignment.getLocation();
+            currentLocation = currentAssignment.getLocation();
+            nextLocation = nextAssignment.getLocation();
 
-            if(currentLocation==null || nextLocaton == null){
-                hardScore++;
+            if(currentLocation==null || nextLocation == null){
+                hardScore--;
                 continue;
             }
 
             if(visitedLocations.contains(currentLocation)) {
-                hardScore++;
+                hardScore--;
             }
 
             visitedLocations.add(currentLocation);
-
-
-
-
-//            System.out.println(currentLocation+ " -- " + nextLocaton );
-            softscore -= calculateDistance(currentLocation, nextLocaton);
-
+            // The benchmarks use the rounded Eucledian distance
+            softscore -= Math.round(calculateDistance(currentLocation, nextLocation));
 
         }
+//        int diff = visitedLocations.size() - tspSolution.getAssignments().size();
+//        if( diff > 0) {
+//            hardScore -= diff;
+//        }
 
-        return HardSoftScore.valueOf(-hardScore, (int) -softscore);
+        return HardSoftScore.valueOf(hardScore,  softscore);
     }
 
     private double calculateDistance(Location loc1, Location loc2){
