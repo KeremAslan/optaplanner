@@ -1,5 +1,6 @@
 package problems.tsp.app;
 
+import jdk.swing.interop.SwingInterOpUtils;
 import org.optaplanner.core.api.score.Score;
 import org.optaplanner.core.api.score.buildin.hardsoft.HardSoftScore;
 import org.optaplanner.core.api.score.buildin.simplebigdecimal.SimpleBigDecimalScore;
@@ -24,9 +25,7 @@ public class TspApp {
 
         TspSolution problem = TspProblemGenerator.createTspProblem(TspProblemGenerator.Dataset.WESTERN_SAHARA);
 
-        for(Assignment assignment: problem.getAssignments()){
-            System.out.println(assignment);
-        }
+        System.out.println("# of assignments created " + problem.getAssignments());
 
         TspSolution solution = solver.solve(problem);
         HardSoftScore score = solution.getScore();
