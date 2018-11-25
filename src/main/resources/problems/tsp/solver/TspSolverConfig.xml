@@ -10,10 +10,10 @@
         <easyScoreCalculatorClass>problems.tsp.score.EasyCalculator</easyScoreCalculatorClass>
     </scoreDirectorFactory>
 
-    <!--<constructionHeuristic>FIRST_FIT_DECREASING</constructionHeuristic>-->
-
-
+    <!--Note construction heuristic don't necessarily create feasible solutions-->
+    <constructionHeuristic>FIRST_FIT_DECREASING</constructionHeuristic>
+    <localSearch>HILL_CLIMBING</localSearch>
     <termination>
-        <secondsSpentLimit>15</secondsSpentLimit>
+        <secondsSpentLimit>10</secondsSpentLimit>
     </termination>
 </solver>
