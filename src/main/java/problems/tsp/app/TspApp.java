@@ -7,6 +7,8 @@ import org.optaplanner.core.api.score.buildin.hardsoft.HardSoftScore;
 import org.optaplanner.core.api.solver.Solver;
 import org.optaplanner.core.api.solver.SolverFactory;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import problems.tsp.domain.Assignment;
 import problems.tsp.domain.TspSolution;
 import problems.tsp.persistence.TspProblemGenerator;
@@ -14,6 +16,10 @@ import problems.tsp.persistence.TspProblemGenerator;
 import java.io.File;
 
 public class TspApp {
+
+    public static final int OPTIMUM_SCORE = -27603;
+
+    public static final Logger LOGGER = LoggerFactory.getLogger(TspApp.class);
 
     public static void main(String[] args){
         //build solver
@@ -33,13 +39,18 @@ public class TspApp {
         TspSolution solution = solver.solve(problem);
         HardSoftScore score = solution.getScore();
 
-//        PlannerBenchmark plannerBenchmark = benchmarkFactory.buildPlannerBenchmark(solution, problem);
+        PlannerBenchmark plannerBenchmark = benchmarkFactory.buildPlannerBenchmark(solution, problem);
 //        plannerBenchmark.benchmark();
         System.out.println("HardScore is " + score.getHardScore() + " soft score is "+ score.getSoftScore());
 
-        for(Assignment assignment: solution.getAssignments()){
-            System.out.println(assignment);
-        }
+        System.out.println(solution);
+
+        printScoreInPerc(score);
+
+    }
+
+    private static void printScoreInPerc(HardSoftScore score) {
+        System.out.println("Score " +  String.format("%.2f",OPTIMUM_SCORE*1.0/score.getSoftScore()*1.0 * 100) + "% ");
 
     }
 }

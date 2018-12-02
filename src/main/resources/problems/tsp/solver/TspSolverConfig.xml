@@ -10,10 +10,20 @@
         <easyScoreCalculatorClass>problems.tsp.score.EasyCalculator</easyScoreCalculatorClass>
     </scoreDirectorFactory>
 
-    <!--Note construction heuristic don't necessarily create feasible solutions-->
+    <!--Note construction heuristics don't necessarily create feasible solutions-->
     <constructionHeuristic>FIRST_FIT_DECREASING</constructionHeuristic>
-    <localSearch>HILL_CLIMBING</localSearch>
+    <localSearch>TABU_SEARCH
+    </localSearch>
+
     <termination>
-        <secondsSpentLimit>10</secondsSpentLimit>
+        <secondsSpentLimit>15</secondsSpentLimit>
     </termination>
+
+
 </solver>
+
+
+<!--<configuration>-->
+    <!--<logger name="org.optaplanner" level="error"/>-->
+<!--</configuration>-->
+

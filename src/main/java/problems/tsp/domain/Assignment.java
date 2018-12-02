@@ -37,4 +37,8 @@ public class Assignment {
                 ", location=" + location +
                 '}';
     }
+
+    public int getPosition() {
+        return position;
+    }
 }

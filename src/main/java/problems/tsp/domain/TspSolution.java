@@ -50,4 +50,18 @@ public class TspSolution {
     public void setScore(HardSoftScore score){
         this.score = score;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder sb= new StringBuilder();
+        sb.append("TspSolution{[");
+        for(Assignment assignment : getAssignments()) {
+            sb.append("(");
+            sb.append(assignment.getPosition()).append(")");
+            sb.append(assignment.getLocation().getId());
+            sb.append("-");
+        }
+        sb.append("}");
+        return sb.toString();
+    }
 }
