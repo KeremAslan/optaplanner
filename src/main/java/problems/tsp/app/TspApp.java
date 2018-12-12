@@ -1,6 +1,8 @@
 package problems.tsp.app;
 
 
+import ch.qos.logback.classic.LoggerContext;
+import ch.qos.logback.core.util.StatusPrinter;
 import org.optaplanner.benchmark.api.PlannerBenchmark;
 import org.optaplanner.benchmark.api.PlannerBenchmarkFactory;
 import org.optaplanner.core.api.score.buildin.hardsoft.HardSoftScore;
@@ -24,7 +26,13 @@ public class TspApp {
     public static void main(String[] args){
         //build solver
 
+        // assume SLF4J is bound to logback in the current environment
+        LoggerContext lc = (LoggerContext) LoggerFactory.getILoggerFactory();
+        // print logback's internal status
+        StatusPrinter.print(lc);
 
+
+        LOGGER.info("Starting application");
 //        ClassLoader cl = new ClassLoader();
         SolverFactory solverFactory = SolverFactory.createFromXmlFile( new File("src/main/resources/problems/tsp/solver/TspSolverConfig.xml"));
         Solver<TspSolution> solver = solverFactory.buildSolver();
