@@ -31,4 +31,9 @@ public class Location {
                 "id=" + id +
                 '}';
     }
+
+    public double getDistanceTo(Standstill standstill) {
+        return Math.sqrt(Math.pow(latitude-standstill.getLocation().getLatitude(), 2)
+            + Math.pow(longitude-standstill.getLocation().getLongitude(),2));
+    }
 }

@@ -4,42 +4,68 @@ import org.optaplanner.core.api.domain.solution.PlanningEntityCollectionProperty
 import org.optaplanner.core.api.domain.solution.PlanningScore;
 import org.optaplanner.core.api.domain.solution.PlanningSolution;
 import org.optaplanner.core.api.domain.solution.drools.ProblemFactCollectionProperty;
+import org.optaplanner.core.api.domain.solution.drools.ProblemFactProperty;
 import org.optaplanner.core.api.domain.valuerange.ValueRangeProvider;
-import org.optaplanner.core.api.score.Score;
 import org.optaplanner.core.api.score.buildin.hardsoft.HardSoftScore;
-import org.optaplanner.core.api.score.buildin.simplebigdecimal.SimpleBigDecimalScore;
 
+import java.util.Collections;
 import java.util.List;
 
 @PlanningSolution
 public class TspSolution {
 
 
+    private String name;
+
+    /** Starting point of TSP tour */
+    private Domicile domicile;
+
     private List<Location> locations;
 
-    private List<Assignment> assignments;
+    private List<Visit> visits;
 
-//    private SimpleBigDecimalScore score;
     private HardSoftScore score;
 
     public TspSolution(){
 
     }
 
-    public TspSolution(List<Location> locations, List<Assignment> assignments){
+    public TspSolution(List<Location> locations, List<Visit> visits){
         this.locations = locations;
-        this.assignments = assignments;
+        this.visits = visits;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @ProblemFactProperty
+    public Domicile getDomicile() {
+        return domicile;
+    }
+
+    public void setDomicile(Domicile domicile) {
+        this.domicile = domicile;
     }
 
     @ProblemFactCollectionProperty
-    @ValueRangeProvider(id="locations")
     public List<Location> getLocations() {
         return locations;
     }
 
     @PlanningEntityCollectionProperty
-    public List<Assignment> getAssignments() {
-        return assignments;
+    @ValueRangeProvider(id = "visitRange")
+    public List<Visit> getVisits() {
+        return visits;
+    }
+
+    @ValueRangeProvider(id= "domicileRange")
+    public List<Domicile> getDomicileRange() {
+        return Collections.singletonList(domicile);
     }
 
     @PlanningScore
@@ -51,14 +77,23 @@ public class TspSolution {
         this.score = score;
     }
 
+    public void setLocations(List<Location> locations) {
+        this.locations = locations;
+    }
+
+    public void setVisits(List<Visit> visits) {
+        this.visits = visits;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb= new StringBuilder();
         sb.append("TspSolution{[");
-        for(Assignment assignment : getAssignments()) {
-            sb.append("(");
-            sb.append(assignment.getPosition()).append(")");
-            sb.append(assignment.getLocation().getId());
+        for(Visit visit : visits) {
+//            sb.append("(");
+            if (visit.getLocation() != null) {
+                sb.append(visit.getLocation().getId());
+            }
             sb.append("-");
         }
         sb.append("}");

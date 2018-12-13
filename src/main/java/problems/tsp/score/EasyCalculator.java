@@ -2,16 +2,12 @@ package problems.tsp.score;
 
 import org.optaplanner.core.api.score.Score;
 import org.optaplanner.core.api.score.buildin.hardsoft.HardSoftScore;
-import org.optaplanner.core.api.score.buildin.simple.SimpleScore;
-import org.optaplanner.core.api.score.buildin.simplebigdecimal.SimpleBigDecimalScore;
 import org.optaplanner.core.impl.score.director.easy.EasyScoreCalculator;
-import problems.tsp.domain.Assignment;
+import problems.tsp.domain.Visit;
 import problems.tsp.domain.Location;
 import problems.tsp.domain.TspSolution;
 
-import java.math.BigDecimal;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 public class EasyCalculator implements EasyScoreCalculator<TspSolution> {
@@ -25,22 +21,22 @@ public class EasyCalculator implements EasyScoreCalculator<TspSolution> {
         int softscore = 0;
 
         Set<Location> visitedLocations = new HashSet<>();
-        for(int i =0; i < tspSolution.getAssignments().size(); i++) {
-            Assignment currentAssignment;
+        for(int i = 0; i < tspSolution.getVisits().size(); i++) {
+            Visit currentVisit;
             Location currentLocation;
-            Assignment nextAssignment;
+            Visit nextVisit;
             Location nextLocation;
             // close loop if end of route
-            if(i == tspSolution.getAssignments().size()-1) {
-                currentAssignment = tspSolution.getAssignments().get(i);
-                nextAssignment = tspSolution.getAssignments().get(0);
+            if(i == tspSolution.getVisits().size()-1) {
+                currentVisit = tspSolution.getVisits().get(i);
+                nextVisit = tspSolution.getVisits().get(0);
             } else {
-                currentAssignment = tspSolution.getAssignments().get(i);
-                nextAssignment = tspSolution.getAssignments().get(i+1);
+                currentVisit = tspSolution.getVisits().get(i);
+                nextVisit = tspSolution.getVisits().get(i+1);
             }
 
-            currentLocation = currentAssignment.getLocation();
-            nextLocation = nextAssignment.getLocation();
+            currentLocation = currentVisit.getLocation();
+            nextLocation = nextVisit.getLocation();
 
             if(currentLocation==null || nextLocation == null){
                 hardScore--;
@@ -56,7 +52,7 @@ public class EasyCalculator implements EasyScoreCalculator<TspSolution> {
             softscore -= Math.round(calculateDistance(currentLocation, nextLocation));
 
         }
-//        int diff = visitedLocations.size() - tspSolution.getAssignments().size();
+//        int diff = visitedLocations.size() - tspSolution.getVisits().size();
 //        if( diff > 0) {
 //            hardScore -= diff;
 //        }
