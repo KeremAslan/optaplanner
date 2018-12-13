@@ -22,10 +22,11 @@ public class TspApp {
 
     public static final int OPTIMUM_SCORE_WESTERN_SAHARA = -27603;
     public static final int OPTIMUM_SCORE_ZIMBABWE = -95345;
+    public static final int OPTIMUM_SCORE_URUGUAY = -79114;
 
     public static final Logger LOGGER = LoggerFactory.getLogger(TspApp.class);
 
-    public static final TspProblemGenerator.Dataset DATASET = TspProblemGenerator.Dataset.ZIMBABWE;
+    public static final TspProblemGenerator.Dataset DATASET = TspProblemGenerator.Dataset.URUGUAY;
 
     public static void main(String[] args){
 
@@ -55,8 +56,6 @@ public class TspApp {
         PlannerBenchmark plannerBenchmark = benchmarkFactory.buildPlannerBenchmark(solution, problem);
 //        plannerBenchmark.benchmark();
         LOGGER.info("Best found solution is {}",  score);
-
-
         LOGGER.info("Solution {}", solution);
 
         printScoreInPerc(score);
