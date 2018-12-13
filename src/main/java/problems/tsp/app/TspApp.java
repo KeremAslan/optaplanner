@@ -16,16 +16,20 @@ import problems.tsp.domain.TspSolution;
 import problems.tsp.persistence.TspProblemGenerator;
 
 import java.io.File;
+import javax.xml.crypto.Data;
 
 public class TspApp {
 
-    public static final int OPTIMUM_SCORE = -27603;
+    public static final int OPTIMUM_SCORE_WESTERN_SAHARA = -27603;
+    public static final int OPTIMUM_SCORE_ZIMBABWE = -95345;
 
     public static final Logger LOGGER = LoggerFactory.getLogger(TspApp.class);
 
-    public static void main(String[] args){
-        //build solver
+    public static final TspProblemGenerator.Dataset DATASET = TspProblemGenerator.Dataset.ZIMBABWE;
 
+    public static void main(String[] args){
+
+        // configure logback
         // assume SLF4J is bound to logback in the current environment
         LoggerContext lc = (LoggerContext) LoggerFactory.getILoggerFactory();
         // print logback's internal status
@@ -33,35 +37,39 @@ public class TspApp {
 
 
         LOGGER.info("Starting application");
-//        ClassLoader cl = new ClassLoader();
+        //build solver
         SolverFactory solverFactory = SolverFactory.createFromXmlFile( new File("src/main/resources/problems/tsp/solver/TspSolverConfig.xml"));
         Solver<TspSolution> solver = solverFactory.buildSolver();
         SolverConfig solverConfig = solverFactory.getSolverConfig();
-        System.out.println("SolverConfig ");
-        System.out.println(solverConfig);
 
         PlannerBenchmarkFactory benchmarkFactory = PlannerBenchmarkFactory.createFromSolverFactory(solverFactory);
 
 
-        //Load Western Sahara Dataset
-        TspSolution problem = TspProblemGenerator.createTspProblem(TspProblemGenerator.Dataset.WESTERN_SAHARA);
-        // TODO Load another TSP Dataset for benchmarking purposes
+        //Load Dataset
+        TspSolution problem = TspProblemGenerator.createTspProblem(DATASET);
 
+        // solve
         TspSolution solution = solver.solve(problem);
         HardSoftScore score = solution.getScore();
 
         PlannerBenchmark plannerBenchmark = benchmarkFactory.buildPlannerBenchmark(solution, problem);
 //        plannerBenchmark.benchmark();
-        System.out.println("HardScore is " + score.getHardScore() + " soft score is "+ score.getSoftScore());
+        LOGGER.info("Best found solution is {}",  score);
 
-        System.out.println(solution);
+
+        LOGGER.info("Solution {}", solution);
 
         printScoreInPerc(score);
 
     }
 
     private static void printScoreInPerc(HardSoftScore score) {
-        System.out.println("Score " +  String.format("%.2f",OPTIMUM_SCORE*1.0/score.getSoftScore()*1.0 * 100) + "% ");
-
+      int optimumScore = 0;
+      if (TspProblemGenerator.Dataset.WESTERN_SAHARA == DATASET) {
+        optimumScore = OPTIMUM_SCORE_WESTERN_SAHARA;
+      } else if (TspProblemGenerator.Dataset.ZIMBABWE == DATASET) {
+        optimumScore = OPTIMUM_SCORE_ZIMBABWE;
+      }
+      LOGGER.info("Score is of best known {}%", String.format("%.2f", optimumScore *1.0/score.getSoftScore()*1.0 * 100));
     }
 }
