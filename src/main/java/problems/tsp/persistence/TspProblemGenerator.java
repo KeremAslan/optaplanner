@@ -41,6 +41,8 @@ public class TspProblemGenerator {
 
                         String[] splitted = line.split(" ");
                         Location location = new Location(Integer.valueOf(splitted[0]), Double.valueOf(splitted[1]), Double.valueOf(splitted[2]));
+
+                        // Note that the non-variable fields need to be set as planner does not configure these
                         if(count == 0) {
                             Domicile domicile = new Domicile();
                             domicile.setLocation(location);
@@ -54,7 +56,6 @@ public class TspProblemGenerator {
                         count++;
                     }
                     lineNumber++;
-
 
                 }
             } catch (IOException e){
