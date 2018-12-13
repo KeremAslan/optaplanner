@@ -2,6 +2,7 @@ package problems.tsp.score;
 
 import org.optaplanner.core.api.score.Score;
 import org.optaplanner.core.api.score.buildin.hardsoft.HardSoftScore;
+import org.optaplanner.core.api.score.buildin.hardsoftdouble.HardSoftDoubleScore;
 import org.optaplanner.core.impl.score.director.easy.EasyScoreCalculator;
 import problems.tsp.domain.Domicile;
 import problems.tsp.domain.Standstill;
@@ -29,22 +30,21 @@ public class EasyCalculator implements EasyScoreCalculator<TspSolution> {
         for(Visit visit : visits) {
             Standstill previousStandstill = visit.getPreviousStandstill();
             if (previousStandstill != null) {
-                softscore -= visit.getDistanceFromPreviousStandstill();
+                softscore -= Math.round(visit.getDistanceFromPreviousStandstill());
                 if (previousStandstill instanceof Visit) {
                     tailVisitSet.remove(previousStandstill);
                 }
             }
-//            else {
-//                hardScore--;
-//            }
         }
 
         Domicile domicile = tspSolution.getDomicile();
         for (Visit tailVisit : tailVisitSet) {
-            if (tailVisit.getPreviousStandstill() == null) {
+            if (tailVisit.getPreviousStandstill() != null) {
                 softscore -= tailVisit.getDistanceTo(domicile);
             }
         }
+
+//        return HardSoftDoubleScore.valueOf(0.0, softscore);
 
         return HardSoftScore.valueOf(hardScore,  softscore);
     }
