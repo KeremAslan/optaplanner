@@ -43,7 +43,8 @@ public class Visit implements Standstill, Serializable {
         if(previousStandstill == null) {
             return 0;
         } else {
-            return previousStandstill.getLocation().getDistanceTo(this);
+            return previousStandstill.getDistanceTo(this);
+//                previousStandstill.getLocation().getDistanceTo(this);
         }
     }
 

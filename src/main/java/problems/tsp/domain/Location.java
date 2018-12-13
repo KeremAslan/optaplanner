@@ -38,7 +38,7 @@ public class Location implements Serializable {
         return
 //            Math.round(
             Math.sqrt(
-                Math.pow(latitude-standstill.getLocation().getLatitude(), 2)
+                Math.pow(latitude -standstill.getLocation().getLatitude(), 2)
             +  Math.pow(longitude-standstill.getLocation().getLongitude(),2));
     }
 }
