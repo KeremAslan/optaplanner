@@ -3,11 +3,14 @@ package problems.tsp.score;
 import org.optaplanner.core.api.score.Score;
 import org.optaplanner.core.api.score.buildin.hardsoft.HardSoftScore;
 import org.optaplanner.core.impl.score.director.easy.EasyScoreCalculator;
+import problems.tsp.domain.Domicile;
+import problems.tsp.domain.Standstill;
 import problems.tsp.domain.Visit;
 import problems.tsp.domain.Location;
 import problems.tsp.domain.TspSolution;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class EasyCalculator implements EasyScoreCalculator<TspSolution> {
@@ -20,42 +23,28 @@ public class EasyCalculator implements EasyScoreCalculator<TspSolution> {
         int hardScore = 0;
         int softscore = 0;
 
-        Set<Location> visitedLocations = new HashSet<>();
-        for(int i = 0; i < tspSolution.getVisits().size(); i++) {
-            Visit currentVisit;
-            Location currentLocation;
-            Visit nextVisit;
-            Location nextLocation;
-            // close loop if end of route
-            if(i == tspSolution.getVisits().size()-1) {
-                currentVisit = tspSolution.getVisits().get(i);
-                nextVisit = tspSolution.getVisits().get(0);
-            } else {
-                currentVisit = tspSolution.getVisits().get(i);
-                nextVisit = tspSolution.getVisits().get(i+1);
+        List<Visit> visits = tspSolution.getVisits();
+        Set<Visit> tailVisitSet = new HashSet<>(visits);
+
+        for(Visit visit : visits) {
+            Standstill previousStandstill = visit.getPreviousStandstill();
+            if (previousStandstill != null) {
+                softscore -= visit.getDistanceFromPreviousStandstill();
+                if (previousStandstill instanceof Visit) {
+                    tailVisitSet.remove(previousStandstill);
+                }
             }
-
-            currentLocation = currentVisit.getLocation();
-            nextLocation = nextVisit.getLocation();
-
-            if(currentLocation==null || nextLocation == null){
-                hardScore--;
-                continue;
-            }
-
-            if(visitedLocations.contains(currentLocation)) {
-                hardScore--;
-            }
-
-            visitedLocations.add(currentLocation);
-            // The benchmarks use the rounded Eucledian distance
-            softscore -= Math.round(calculateDistance(currentLocation, nextLocation));
-
+//            else {
+//                hardScore--;
+//            }
         }
-//        int diff = visitedLocations.size() - tspSolution.getVisits().size();
-//        if( diff > 0) {
-//            hardScore -= diff;
-//        }
+
+        Domicile domicile = tspSolution.getDomicile();
+        for (Visit tailVisit : tailVisitSet) {
+            if (tailVisit.getPreviousStandstill() == null) {
+                softscore -= tailVisit.getDistanceTo(domicile);
+            }
+        }
 
         return HardSoftScore.valueOf(hardScore,  softscore);
     }

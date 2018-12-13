@@ -93,7 +93,6 @@ public class TspSolution implements Serializable {
 
         sb.append(visits.size()+1).append("[");
 
-        sb.append("D:(").append(domicile.getLocation().getId()).append(")");
 
         Standstill standstill = domicile;
 
@@ -111,7 +110,7 @@ public class TspSolution implements Serializable {
         return sb.toString();
     }
 
-    private Visit findNextVisit(Standstill standstill) {
+    public Visit findNextVisit(Standstill standstill) {
         for (Visit visit : this.getVisits()) {
             if(visit.getPreviousStandstill() == standstill) {
                 return visit;

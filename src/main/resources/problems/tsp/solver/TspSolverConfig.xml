@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <solver>
     <solutionClass>problems.tsp.domain.TspSolution</solutionClass>
-    <entityClass>problems.tsp.domain.Assignment</entityClass>
+    <entityClass>problems.tsp.domain.Visit</entityClass>
     <!--<entityClass>problems.tsp.domain.Location</entityClass>-->
-
-
 
     <scoreDirectorFactory>
         <easyScoreCalculatorClass>problems.tsp.score.EasyCalculator</easyScoreCalculatorClass>
@@ -12,7 +10,8 @@
 
     <!--Note construction heuristics don't necessarily create feasible solutions-->
     <constructionHeuristic>FIRST_FIT_DECREASING</constructionHeuristic>
-    <localSearch>TABU_SEARCH
+    <localSearch>
+        TABU_SEARCH
     </localSearch>
 
     <termination>

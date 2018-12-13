@@ -35,7 +35,9 @@ public class Location implements Serializable {
     }
 
     public double getDistanceTo(Standstill standstill) {
-        return Math.sqrt(Math.pow(latitude-standstill.getLocation().getLatitude(), 2)
-            + Math.pow(longitude-standstill.getLocation().getLongitude(),2));
+        return Math.round(
+            Math.sqrt(
+          Math.pow(latitude-standstill.getLocation().getLatitude(), 2))
+            +  Math.pow(longitude-standstill.getLocation().getLongitude(),2));
     }
 }

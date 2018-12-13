@@ -56,6 +56,7 @@ public class Visit implements Standstill, Serializable {
     public String toString() {
         return "Visit{" +
             ", location=" + location +
+            ", previousStandstill=" + previousStandstill +
             '}';
     }
 }
