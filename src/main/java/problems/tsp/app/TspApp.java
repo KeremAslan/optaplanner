@@ -9,6 +9,7 @@ import org.optaplanner.core.api.score.buildin.hardsoft.HardSoftScore;
 import org.optaplanner.core.api.solver.Solver;
 import org.optaplanner.core.api.solver.SolverFactory;
 
+import org.optaplanner.core.config.solver.SolverConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import problems.tsp.domain.TspSolution;
@@ -35,6 +36,9 @@ public class TspApp {
 //        ClassLoader cl = new ClassLoader();
         SolverFactory solverFactory = SolverFactory.createFromXmlFile( new File("src/main/resources/problems/tsp/solver/TspSolverConfig.xml"));
         Solver<TspSolution> solver = solverFactory.buildSolver();
+        SolverConfig solverConfig = solverFactory.getSolverConfig();
+        System.out.println("SolverConfig ");
+        System.out.println(solverConfig);
 
         PlannerBenchmarkFactory benchmarkFactory = PlannerBenchmarkFactory.createFromSolverFactory(solverFactory);
 

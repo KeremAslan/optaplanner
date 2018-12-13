@@ -4,8 +4,10 @@ import org.optaplanner.core.api.domain.entity.PlanningEntity;
 import org.optaplanner.core.api.domain.variable.PlanningVariable;
 import org.optaplanner.core.api.domain.variable.PlanningVariableGraphType;
 
+import java.io.Serializable;
+
 @PlanningEntity
-public class Visit implements Standstill {
+public class Visit implements Standstill, Serializable {
 
     private Location location;
 

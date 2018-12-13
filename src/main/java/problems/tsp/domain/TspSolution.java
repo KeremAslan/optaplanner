@@ -8,11 +8,13 @@ import org.optaplanner.core.api.domain.solution.drools.ProblemFactProperty;
 import org.optaplanner.core.api.domain.valuerange.ValueRangeProvider;
 import org.optaplanner.core.api.score.buildin.hardsoft.HardSoftScore;
 
+import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 
 @PlanningSolution
-public class TspSolution {
+public class TspSolution implements Serializable {
 
 
     private String name;
@@ -28,11 +30,6 @@ public class TspSolution {
 
     public TspSolution(){
 
-    }
-
-    public TspSolution(List<Location> locations, List<Visit> visits){
-        this.locations = locations;
-        this.visits = visits;
     }
 
     public String getName() {
@@ -52,9 +49,18 @@ public class TspSolution {
         this.domicile = domicile;
     }
 
+    @ValueRangeProvider(id= "domicileRange")
+    public List<Domicile> getDomicileRange() {
+        return Collections.singletonList(domicile);
+    }
+
     @ProblemFactCollectionProperty
     public List<Location> getLocations() {
         return locations;
+    }
+
+    public void setLocations(List<Location> locations) {
+        this.locations = locations;
     }
 
     @PlanningEntityCollectionProperty
@@ -63,10 +69,10 @@ public class TspSolution {
         return visits;
     }
 
-    @ValueRangeProvider(id= "domicileRange")
-    public List<Domicile> getDomicileRange() {
-        return Collections.singletonList(domicile);
+    public void setVisits(List<Visit> visits) {
+        this.visits = visits;
     }
+
 
     @PlanningScore
     public HardSoftScore getScore() {
@@ -77,26 +83,41 @@ public class TspSolution {
         this.score = score;
     }
 
-    public void setLocations(List<Location> locations) {
-        this.locations = locations;
-    }
 
-    public void setVisits(List<Visit> visits) {
-        this.visits = visits;
-    }
+
 
     @Override
     public String toString() {
         StringBuilder sb= new StringBuilder();
-        sb.append("TspSolution{[");
-        for(Visit visit : visits) {
-//            sb.append("(");
-            if (visit.getLocation() != null) {
-                sb.append(visit.getLocation().getId());
+        sb.append("TspSolution{# ");
+
+        sb.append(visits.size()+1).append("[");
+
+        sb.append("D:(").append(domicile.getLocation().getId()).append(")");
+
+        Standstill standstill = domicile;
+
+        while (true) {
+            sb.append(standstill.getLocation().getId());
+            standstill = findNextVisit(standstill);
+            if (standstill != null) {
+                sb.append("-");
+            } else {
+                break;
             }
-            sb.append("-");
         }
-        sb.append("}");
+        sb.append("]}");
+
         return sb.toString();
+    }
+
+    private Visit findNextVisit(Standstill standstill) {
+        for (Visit visit : this.getVisits()) {
+            if(visit.getPreviousStandstill() == standstill) {
+                return visit;
+            }
+        }
+
+        return null;
     }
 }

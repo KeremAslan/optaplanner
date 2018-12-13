@@ -47,6 +47,7 @@ public class TspProblemGenerator {
                             tspSolution.setDomicile(domicile);
                         } else {
                             Visit visit = new Visit();
+                            visit.setLocation(location);
                             locations.add(location);
                             visits.add(visit);
                         }
