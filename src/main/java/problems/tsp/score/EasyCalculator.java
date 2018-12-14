@@ -22,39 +22,33 @@ public class EasyCalculator implements EasyScoreCalculator<TspSolution> {
     // So a minimization problem involves negative score ( and constraints)
     public Score calculateScore(TspSolution tspSolution) {
         int hardScore = 0;
-        int softscore = 0;
+        int softScore = 0;
 
         List<Visit> visits = tspSolution.getVisits();
         Set<Visit> tailVisitSet = new HashSet<>(visits);
 
+        //first determine the distance for the chain. i.e. Anchor -> Visit 1 -> Visit 2 -> etc.
         for(Visit visit : visits) {
             Standstill previousStandstill = visit.getPreviousStandstill();
             if (previousStandstill != null) {
-                softscore -= Math.round(visit.getDistanceFromPreviousStandstill());
+                softScore -= Math.round(visit.getDistanceFromPreviousStandstill());
                 if (previousStandstill instanceof Visit) {
                     tailVisitSet.remove(previousStandstill);
                 }
             }
         }
 
+        // then close loop from Visit n -> Anchor.
         Domicile domicile = tspSolution.getDomicile();
         for (Visit tailVisit : tailVisitSet) {
             if (tailVisit.getPreviousStandstill() != null) {
-                softscore -= tailVisit.getDistanceTo(domicile);
+                softScore -= tailVisit.getDistanceTo(domicile);
             }
         }
 
-//        return HardSoftDoubleScore.valueOf(0.0, softscore);
-
-        return HardSoftScore.valueOf(hardScore,  softscore);
+        return HardSoftScore.valueOf(hardScore,  softScore);
     }
 
-    private double calculateDistance(Location loc1, Location loc2){
-        return Math.sqrt(
-                Math.pow(loc1.getLongitude()-loc2.getLongitude(), 2) +
-                Math.pow(loc1.getLatitude()-loc2.getLatitude(), 2)
-        );
-    }
 }
 
 

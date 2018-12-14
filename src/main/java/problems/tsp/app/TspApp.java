@@ -62,12 +62,14 @@ public class TspApp {
 
     }
 
-    private static void printScoreInPerc(HardSoftScore score) {
+    public static void printScoreInPerc(HardSoftScore score) {
       int optimumScore = 0;
       if (TspProblemGenerator.Dataset.WESTERN_SAHARA == DATASET) {
         optimumScore = OPTIMUM_SCORE_WESTERN_SAHARA;
       } else if (TspProblemGenerator.Dataset.ZIMBABWE == DATASET) {
         optimumScore = OPTIMUM_SCORE_ZIMBABWE;
+      } else if (TspProblemGenerator.Dataset.URUGUAY == DATASET) {
+          optimumScore = OPTIMUM_SCORE_URUGUAY;
       }
       LOGGER.info("Score is of best known {}%", String.format("%.2f", optimumScore *1.0/score.getSoftScore()*1.0 * 100));
     }
