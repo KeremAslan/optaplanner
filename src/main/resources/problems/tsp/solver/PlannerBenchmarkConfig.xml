@@ -11,11 +11,13 @@
             <inputSolutionFile>src/main/resources/problems/tsp/data/zi929.txt</inputSolutionFile>
         </problemBenchmarks>
         <solver>
+            <moveThreadCount>4</moveThreadCount>
             <scanAnnotatedClasses>
                 <packageInclude>problems.tsp</packageInclude>
             </scanAnnotatedClasses>
             <scoreDirectorFactory>
-                <easyScoreCalculatorClass>problems.tsp.score.EasyCalculator</easyScoreCalculatorClass>
+                <!--<easyScoreCalculatorClass>problems.tsp.score.EasyCalculator</easyScoreCalculatorClass>-->
+                <incrementalScoreCalculatorClass>problems.tsp.score.TspIncrementalScoreCalculator</incrementalScoreCalculatorClass>
             </scoreDirectorFactory>
             <termination>
                 <secondsSpentLimit>30</secondsSpentLimit>
@@ -23,15 +25,39 @@
         </solver>
     </inheritedSolverBenchmark>
 
+    <!--<solverBenchmark>-->
+        <!--<name>Brute Force</name>-->
+        <!--<solver>-->
+           <!--<exhaustiveSearch>-->
+               <!--<exhaustiveSearchType>BRUTE_FORCE</exhaustiveSearchType>-->
+           <!--</exhaustiveSearch>-->
+        <!--</solver>-->
+    <!--</solverBenchmark>-->
+
+    <!--<solverBenchmark>-->
+        <!--<name>Branch and Bound</name>-->
+        <!--<solver>-->
+            <!--<exhaustiveSearch>-->
+                <!--<exhaustiveSearchType>BRANCH_AND_BOUND</exhaustiveSearchType>-->
+            <!--</exhaustiveSearch>-->
+        <!--</solver>-->
+    <!--</solverBenchmark>-->
+
     <solverBenchmark>
-        <name>Tabu Search</name>
+        <name>Tabu Search with Late Acceptance</name>
         <solver>
             <constructionHeuristic>FIRST_FIT</constructionHeuristic>
-            <localSearch>TABU_SEARCH </localSearch>
+            <localSearch>
+                TABU_SEARCH
+            </localSearch>
+            <localSearch>
+                LATE_ACCEPTANCE
+            </localSearch>
         </solver>
     </solverBenchmark>
 
     <solverBenchmark>
+
         <name>Simulated Annealing</name>
         <solver>
             <constructionHeuristic>FIRST_FIT</constructionHeuristic>
@@ -43,17 +69,23 @@
         <name>Late Acceptance</name>
         <solver>
             <constructionHeuristic>FIRST_FIT</constructionHeuristic>
-            <localSearch>LATE_ACCEPTANCE </localSearch>
+            <localSearch>
+                LATE_ACCEPTANCE
+            </localSearch>
         </solver>
     </solverBenchmark>
 
-    <solverBenchmark>
-        <name>Variable Neighborhood Descent</name>
-        <solver>
-            <constructionHeuristic>FIRST_FIT</constructionHeuristic>
-            <localSearch>VARIABLE_NEIGHBORHOOD_DESCENT </localSearch>
-        </solver>
-    </solverBenchmark>
+    <!--<solverBenchmark>-->
+        <!--<name>Variable Neighborhood Descent</name>-->
+        <!--<solver>-->
+            <!--<constructionHeuristic>FIRST_FIT</constructionHeuristic>-->
+            <!--<localSearch>-->
+                <!--VARIABLE_NEIGHBORHOOD_DESCENT-->
+                <!--<swapMoveSelector/>-->
+            <!--</localSearch>-->
+
+        <!--</solver>-->
+    <!--</solverBenchmark>-->
 
     <benchmarkReport>
         <solverRankingType>TOTAL_SCORE</solverRankingType>

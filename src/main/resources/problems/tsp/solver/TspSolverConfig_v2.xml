@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<solver>
+    <solutionClass>problems.tsp.domain.TspSolution</solutionClass>
+    <entityClass>problems.tsp.domain.Visit</entityClass>
+    <!--<entityClass>problems.tsp.domain.Location</entityClass>-->
+
+    <scoreDirectorFactory>
+        <!--<easyScoreCalculatorClass>problems.tsp.score.EasyCalculator</easyScoreCalculatorClass>-->
+        <incrementalScoreCalculatorClass>problems.tsp.score.TspIncrementalScoreCalculator</incrementalScoreCalculatorClass>
+    </scoreDirectorFactory>
+
+    <!--Note construction heuristics don't necessarily create feasible solutions-->
+    <constructionHeuristic>FIRST_FIT</constructionHeuristic>
+    <localSearch>
+        TABU_SEARCH
+    </localSearch>
+
+    <termination>
+        <secondsSpentLimit>15</secondsSpentLimit>
+    </termination>
+
+
+</solver>
+
+
+<!--<configuration>-->
+    <!--<logger name="org.optaplanner" level="error"/>-->
+<!--</configuration>-->
+

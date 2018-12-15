@@ -58,6 +58,8 @@ public class TspProblemGenerator implements SolutionFileIO<TspSolution> {
           // Note that the non-variable fields need to be set as planner does not configure these
           if(count == 0) {
             Domicile domicile = new Domicile();
+
+            domicile.setId(count);
             domicile.setLocation(location);
             tspSolution.setDomicile(domicile);
           } else {
@@ -65,6 +67,7 @@ public class TspProblemGenerator implements SolutionFileIO<TspSolution> {
             visit.setLocation(location);
             locations.add(location);
             visits.add(visit);
+            visit.setId(count);
           }
           count++;
         }

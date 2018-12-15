@@ -26,7 +26,7 @@ public class TspApp {
 
     public static final Logger LOGGER = LoggerFactory.getLogger(TspApp.class);
 
-    public static final TspProblemGenerator.Dataset DATASET = TspProblemGenerator.Dataset.URUGUAY;
+    public static final TspProblemGenerator.Dataset DATASET = TspProblemGenerator.Dataset.WESTERN_SAHARA;
 
     public static void main(String[] args){
 
@@ -39,7 +39,9 @@ public class TspApp {
 
         LOGGER.info("Starting application");
         //build solver
-        SolverFactory solverFactory = SolverFactory.createFromXmlFile( new File("src/main/resources/problems/tsp/solver/TspSolverConfig_v1.xml"));
+//        SolverFactory solverFactory = SolverFactory.createFromXmlFile( new File("src/main/resources/problems/tsp/solver/TspSolverConfig_v1.xml"));
+        SolverFactory solverFactory = SolverFactory.createFromXmlFile( new File("src/main/resources/problems/tsp/solver/TspSolverConfig_v2.xml"));
+
         Solver<TspSolution> solver = solverFactory.buildSolver();
         SolverConfig solverConfig = solverFactory.getSolverConfig();
 

@@ -1,6 +1,8 @@
 package problems.tsp.domain;
 
 
+import org.optaplanner.core.api.domain.lookup.PlanningId;
+
 import java.io.Serializable;
 
 /**
@@ -9,6 +11,7 @@ import java.io.Serializable;
  */
 public class Domicile implements Standstill, Serializable {
 
+  private Integer id;
 
   private Location location;
 
@@ -33,4 +36,13 @@ public class Domicile implements Standstill, Serializable {
         "location=" + location +
         '}';
   }
+
+    @PlanningId
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 }

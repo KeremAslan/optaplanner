@@ -1,6 +1,7 @@
 package problems.tsp.domain;
 
 import org.optaplanner.core.api.domain.entity.PlanningEntity;
+import org.optaplanner.core.api.domain.lookup.PlanningId;
 import org.optaplanner.core.api.domain.variable.PlanningVariable;
 import org.optaplanner.core.api.domain.variable.PlanningVariableGraphType;
 
@@ -8,6 +9,9 @@ import java.io.Serializable;
 
 @PlanningEntity
 public class Visit implements Standstill, Serializable {
+
+
+    private Integer id;
 
     private Location location;
 
@@ -46,6 +50,15 @@ public class Visit implements Standstill, Serializable {
             return previousStandstill.getDistanceTo(this);
 //                previousStandstill.getLocation().getDistanceTo(this);
         }
+    }
+
+    @PlanningId
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     @Override
