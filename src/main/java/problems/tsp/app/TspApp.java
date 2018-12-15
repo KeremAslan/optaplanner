@@ -39,7 +39,7 @@ public class TspApp {
 
         LOGGER.info("Starting application");
         //build solver
-        SolverFactory solverFactory = SolverFactory.createFromXmlFile( new File("src/main/resources/problems/tsp/solver/TspSolverConfig.xml"));
+        SolverFactory solverFactory = SolverFactory.createFromXmlFile( new File("src/main/resources/problems/tsp/solver/TspSolverConfig_v1.xml"));
         Solver<TspSolution> solver = solverFactory.buildSolver();
         SolverConfig solverConfig = solverFactory.getSolverConfig();
 
@@ -47,7 +47,7 @@ public class TspApp {
 
 
         //Load Dataset
-        TspSolution problem = TspProblemGenerator.createTspProblem(DATASET);
+        TspSolution problem = new TspProblemGenerator().createTspProblem(DATASET);
 
         // solve
         TspSolution solution = solver.solve(problem);

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<plannerBenchmark>
+    <benchmarkDirectory>local/data/tsp</benchmarkDirectory>
+    <warmUpSecondsSpentLimit>30</warmUpSecondsSpentLimit>
+    <inheritedSolverBenchmark>
+        <problemBenchmarks>
+            <solutionFileIOClass>problems.tsp.persistence.TspProblemGenerator</solutionFileIOClass>
+            <inputSolutionFile>src/main/resources/problems/tsp/data/ur734.txt</inputSolutionFile>
+            <inputSolutionFile>src/main/resources/problems/tsp/data/wi29.txt</inputSolutionFile>
+            <inputSolutionFile>src/main/resources/problems/tsp/data/zi929.txt</inputSolutionFile>
+        </problemBenchmarks>
+        <solver>
+            <scanAnnotatedClasses>
+                <packageInclude>problems.tsp</packageInclude>
+            </scanAnnotatedClasses>
+            <scoreDirectorFactory>
+                <easyScoreCalculatorClass>problems.tsp.score.EasyCalculator</easyScoreCalculatorClass>
+            </scoreDirectorFactory>
+            <termination>
+                <secondsSpentLimit>30</secondsSpentLimit>
+            </termination>
+        </solver>
+    </inheritedSolverBenchmark>
+
+    <solverBenchmark>
+        <name>Tabu Search</name>
+        <solver>
+            <constructionHeuristic>FIRST_FIT</constructionHeuristic>
+            <localSearch>TABU_SEARCH </localSearch>
+        </solver>
+    </solverBenchmark>
+
+    <solverBenchmark>
+        <name>Simulated Annealing</name>
+        <solver>
+            <constructionHeuristic>FIRST_FIT</constructionHeuristic>
+            <localSearch>SIMULATED_ANNEALING </localSearch>
+        </solver>
+    </solverBenchmark>
+
+    <solverBenchmark>
+        <name>Late Acceptance</name>
+        <solver>
+            <constructionHeuristic>FIRST_FIT</constructionHeuristic>
+            <localSearch>LATE_ACCEPTANCE </localSearch>
+        </solver>
+    </solverBenchmark>
+
+    <solverBenchmark>
+        <name>Variable Neighborhood Descent</name>
+        <solver>
+            <constructionHeuristic>FIRST_FIT</constructionHeuristic>
+            <localSearch>VARIABLE_NEIGHBORHOOD_DESCENT </localSearch>
+        </solver>
+    </solverBenchmark>
+
+    <benchmarkReport>
+        <solverRankingType>TOTAL_SCORE</solverRankingType>
+    </benchmarkReport>
+</plannerBenchmark>

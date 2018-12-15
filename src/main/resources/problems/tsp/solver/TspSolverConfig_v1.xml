@@ -9,7 +9,7 @@
     </scoreDirectorFactory>
 
     <!--Note construction heuristics don't necessarily create feasible solutions-->
-    <constructionHeuristic>FIRST_FIT_DECREASING</constructionHeuristic>
+    <constructionHeuristic>FIRST_FIT</constructionHeuristic>
     <localSearch>
         TABU_SEARCH
     </localSearch>
