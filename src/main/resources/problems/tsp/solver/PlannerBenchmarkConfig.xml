@@ -113,6 +113,46 @@
     </solverBenchmark>
 
     <solverBenchmark>
+        <name>Tabu Search v3</name>
+        <solver>
+            <constructionHeuristic>FIRST_FIT</constructionHeuristic>
+            <localSearch>
+                TABU_SEARCH
+                <forager>
+                    <acceptedCountLimit>10000</acceptedCountLimit>
+                </forager>
+                <acceptor>
+                    <entityTabuRatio>0.1</entityTabuRatio>
+                </acceptor>
+
+                <unionMoveSelector>
+                    <changeMoveSelector>
+                        <entitySelector id = "entitySelector0"/>
+                        <valueSelector>
+                            <nearbySelection>
+                                <originEntitySelector mimicSelectorRef="entitySelector0"/>
+                                <nearbyDistanceMeterClass>problems.tsp.domain.CustomerNearbyDistanceMeter</nearbyDistanceMeterClass>
+                                <parabolicDistributionSizeMaximum>50</parabolicDistributionSizeMaximum>
+                            </nearbySelection>
+                        </valueSelector>
+                    </changeMoveSelector>
+
+                    <tailChainSwapMoveSelector>
+                        <entitySelector id="tailChainSwapMove"/>
+                        <valueSelector>
+                            <nearbySelection>
+                                <originEntitySelector mimicSelectorRef="tailChainSwapMove"/>
+                                <nearbyDistanceMeterClass>problems.tsp.domain.CustomerNearbyDistanceMeter</nearbyDistanceMeterClass>
+                                <parabolicDistributionSizeMaximum>50</parabolicDistributionSizeMaximum>
+                            </nearbySelection>
+                        </valueSelector>
+                    </tailChainSwapMoveSelector>
+                </unionMoveSelector>
+            </localSearch>
+        </solver>
+    </solverBenchmark>
+
+    <solverBenchmark>
         <name>Tabu Search</name>
         <solver>
             <constructionHeuristic>FIRST_FIT</constructionHeuristic>
@@ -122,36 +162,6 @@
         </solver>
     </solverBenchmark>
 
-    <solverBenchmark>
-
-        <name>Simulated Annealing</name>
-        <solver>
-            <constructionHeuristic>FIRST_FIT</constructionHeuristic>
-            <localSearch>SIMULATED_ANNEALING </localSearch>
-        </solver>
-    </solverBenchmark>
-
-    <solverBenchmark>
-        <name>Late Acceptance</name>
-        <solver>
-            <constructionHeuristic>FIRST_FIT</constructionHeuristic>
-            <localSearch>
-                LATE_ACCEPTANCE
-            </localSearch>
-        </solver>
-    </solverBenchmark>
-
-    <!--<solverBenchmark>-->
-        <!--<name>Variable Neighborhood Descent</name>-->
-        <!--<solver>-->
-            <!--<constructionHeuristic>FIRST_FIT</constructionHeuristic>-->
-            <!--<localSearch>-->
-                <!--VARIABLE_NEIGHBORHOOD_DESCENT-->
-                <!--<swapMoveSelector/>-->
-            <!--</localSearch>-->
-
-        <!--</solver>-->
-    <!--</solverBenchmark>-->
 
     <benchmarkReport>
         <solverRankingType>TOTAL_SCORE</solverRankingType>
