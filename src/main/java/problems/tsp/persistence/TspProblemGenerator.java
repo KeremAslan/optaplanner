@@ -64,8 +64,7 @@ public class TspProblemGenerator implements SolutionFileIO<TspSolution> {
           String[] splitted = line.split(" ");
           Location location;
           if (TspApp.coursera) {
-            location = new Location(startLine-1, Double.valueOf(splitted[0]), Double.valueOf(splitted[1]));
-
+            location = new Location(count-1, Double.valueOf(splitted[0]), Double.valueOf(splitted[1]));
           } else {
             location = new Location(Integer.valueOf(splitted[0]), Double.valueOf(splitted[1]), Double.valueOf(splitted[2]));
 

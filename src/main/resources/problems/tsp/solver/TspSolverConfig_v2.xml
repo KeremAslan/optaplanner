@@ -1,29 +1,43 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <solver>
-    <solutionClass>problems.tsp.domain.TspSolution</solutionClass>
-    <entityClass>problems.tsp.domain.Visit</entityClass>
-    <!--<entityClass>problems.tsp.domain.Location</entityClass>-->
-
+    <moveThreadCount>AUTO</moveThreadCount>
+    <scanAnnotatedClasses>
+        <packageInclude>problems.tsp</packageInclude>
+    </scanAnnotatedClasses>
     <scoreDirectorFactory>
-        <!--<easyScoreCalculatorClass>problems.tsp.score.EasyCalculator</easyScoreCalculatorClass>-->
         <incrementalScoreCalculatorClass>problems.tsp.score.TspIncrementalScoreCalculator</incrementalScoreCalculatorClass>
     </scoreDirectorFactory>
-
-    <!--Note construction heuristics don't necessarily create feasible solutions-->
-    <constructionHeuristic>FIRST_FIT</constructionHeuristic>
-    <localSearch>
-        TABU_SEARCH
-    </localSearch>
-
     <termination>
-        <secondsSpentLimit>15</secondsSpentLimit>
+        <secondsSpentLimit>60</secondsSpentLimit>
     </termination>
-
-
+    <constructionHeuristic/>
+    <localSearch>
+        <unionMoveSelector>
+            <changeMoveSelector>
+                <entitySelector id="entitySelector0"/>
+                <valueSelector>
+                    <nearbySelection>
+                        <originEntitySelector mimicSelectorRef="entitySelector0"/>
+                        <nearbyDistanceMeterClass>problems.tsp.domain.CustomerNearbyDistanceMeter</nearbyDistanceMeterClass>
+                        <linearDistributionSizeMaximum>50</linearDistributionSizeMaximum>
+                    </nearbySelection>
+                </valueSelector>
+            </changeMoveSelector>
+            <tailChainSwapMoveSelector>
+                <entitySelector id="tailChainSwapMove"/>
+                <valueSelector>
+                    <nearbySelection>
+                        <originEntitySelector mimicSelectorRef="tailChainSwapMove"/>
+                        <nearbyDistanceMeterClass>problems.tsp.domain.CustomerNearbyDistanceMeter</nearbyDistanceMeterClass>
+                        <parabolicDistributionSizeMaximum>70</parabolicDistributionSizeMaximum>
+                    </nearbySelection>
+                </valueSelector>
+            </tailChainSwapMoveSelector>
+        </unionMoveSelector>
+        <acceptor>
+            <entityTabuRatio>0.05</entityTabuRatio>
+        </acceptor>
+        <forager>
+            <acceptedCountLimit>1000</acceptedCountLimit>
+        </forager>
+    </localSearch>
 </solver>
-
-
-<!--<configuration>-->
-    <!--<logger name="org.optaplanner" level="error"/>-->
-<!--</configuration>-->
-
