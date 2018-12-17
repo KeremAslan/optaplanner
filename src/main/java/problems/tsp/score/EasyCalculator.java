@@ -4,6 +4,7 @@ import org.optaplanner.core.api.score.Score;
 import org.optaplanner.core.api.score.buildin.hardsoft.HardSoftScore;
 import org.optaplanner.core.api.score.buildin.hardsoftdouble.HardSoftDoubleScore;
 import org.optaplanner.core.impl.score.director.easy.EasyScoreCalculator;
+import problems.tsp.app.TspApp;
 import problems.tsp.domain.Domicile;
 import problems.tsp.domain.Standstill;
 import problems.tsp.domain.Visit;
@@ -31,7 +32,12 @@ public class EasyCalculator implements EasyScoreCalculator<TspSolution> {
         for(Visit visit : visits) {
             Standstill previousStandstill = visit.getPreviousStandstill();
             if (previousStandstill != null) {
-                softScore -= Math.round(visit.getDistanceFromPreviousStandstill());
+                if (TspApp.coursera) {
+                    softScore -= Math.round(visit.getDistanceFromPreviousStandstill());
+                } else {
+                    softScore -= visit.getDistanceFromPreviousStandstill();
+                }
+
                 if (previousStandstill instanceof Visit) {
                     tailVisitSet.remove(previousStandstill);
                 }
@@ -42,7 +48,12 @@ public class EasyCalculator implements EasyScoreCalculator<TspSolution> {
         Domicile domicile = tspSolution.getDomicile();
         for (Visit tailVisit : tailVisitSet) {
             if (tailVisit.getPreviousStandstill() != null) {
-                softScore -= tailVisit.getDistanceTo(domicile);
+                if (TspApp.coursera) {
+                    softScore -= tailVisit.getDistanceTo(domicile);
+                } else {
+                    softScore -= Math.round(tailVisit.getDistanceTo(domicile));
+                }
+
             }
         }
 
