@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<plannerBenchmark>
+    <benchmarkDirectory>local/data/vrp</benchmarkDirectory>
+    <warmUpSecondsSpentLimit>30</warmUpSecondsSpentLimit>
+    <inheritedSolverBenchmark>
+    <problemBenchmarks>
+        <solutionFileIOClass>problems.vrp.persistence.VrpProblemGenerator</solutionFileIOClass>
+        <inputSolutionFile>src/main/resources/problems/vrp/data/vrp_76_9_3</inputSolutionFile>
+        <!--<inputSolutionFile>src/main/resources/problems/tsp/data/wi29.txt</inputSolutionFile>-->
+        <!--<inputSolutionFile>src/main/resources/problems/tsp/data/zi929.txt</inputSolutionFile>-->
+    </problemBenchmarks>
+
+    <solver>
+        <!--<moveThreadCount>AUTO</moveThreadCount>-->
+        <scanAnnotatedClasses>
+            <packageInclude>problems.vrp</packageInclude>
+        </scanAnnotatedClasses>
+        <scoreDirectorFactory>
+            <easyScoreCalculatorClass>problems.vrp.score.VrpEasyScoreCalculator</easyScoreCalculatorClass>
+            <!--<incrementalScoreCalculatorClass>problems.tsp.score.TspIncrementalScoreCalculator</incrementalScoreCalculatorClass>-->
+        </scoreDirectorFactory>
+        <termination>
+            <secondsSpentLimit>30</secondsSpentLimit>
+        </termination>
+    </solver>
+    </inheritedSolverBenchmark>
+
+    <solverBenchmark>
+        <name>Tabu 1</name>
+        <solver>
+            <constructionHeuristic>FIRST_FIT</constructionHeuristic>
+            <localSearch>
+                TABU_SEARCH
+                <forager>
+                    <acceptedCountLimit>1000</acceptedCountLimit>
+                </forager>
+                <acceptor>
+                    <entityTabuRatio>0.05</entityTabuRatio>
+                </acceptor>
+            </localSearch>
+        </solver>
+    </solverBenchmark>
+
+
+    <solverBenchmark>
+        <name>Tabu 2</name>
+        <solver>
+            <constructionHeuristic>FIRST_FIT</constructionHeuristic>
+            <localSearch>
+                TABU_SEARCH
+                <forager>
+                    <acceptedCountLimit>10000</acceptedCountLimit>
+                </forager>
+                <acceptor>
+                    <entityTabuRatio>0.1</entityTabuRatio>
+                </acceptor>
+            </localSearch>
+
+        </solver>
+    </solverBenchmark>
+
+    <solverBenchmark>
+        <name>Simulated Annealing</name>
+        <solver>
+            <constructionHeuristic>FIRST_FIT</constructionHeuristic>
+            <localSearch>
+                SIMULATED_ANNEALING
+            </localSearch>
+        </solver>
+    </solverBenchmark>
+
+</plannerBenchmark>

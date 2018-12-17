@@ -37,7 +37,7 @@ public class VrpApp {
     if (fileToRead != null) {
 
       VrpSolution vrpSolution = new VrpProblemGenerator().read(new File(fileToRead));
-      SolverFactory solverFactory = SolverFactory.createFromXmlFile(new File("src/main/resources/problems/vrp/solver/solverConfig"));
+      SolverFactory solverFactory = SolverFactory.createFromXmlFile(new File("src/main/resources/problems/vrp/solver/vrpSolverConfig"));
 
       Solver<VrpSolution> solver = solverFactory.buildSolver();
 
