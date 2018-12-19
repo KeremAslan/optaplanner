@@ -7,8 +7,8 @@
     <problemBenchmarks>
         <solutionFileIOClass>problems.vrp.persistence.VrpProblemGenerator</solutionFileIOClass>
         <inputSolutionFile>src/main/resources/problems/vrp/data/vrp_76_9_3</inputSolutionFile>
-        <!--<inputSolutionFile>src/main/resources/problems/tsp/data/wi29.txt</inputSolutionFile>-->
-        <!--<inputSolutionFile>src/main/resources/problems/tsp/data/zi929.txt</inputSolutionFile>-->
+        <inputSolutionFile>src/main/resources/problems/vrp/data/vrp_101_11_4</inputSolutionFile>
+        <inputSolutionFile>src/main/resources/problems/vrp/data/vrp_151_14_1</inputSolutionFile>
     </problemBenchmarks>
 
     <solver>
@@ -21,26 +21,10 @@
             <!--<incrementalScoreCalculatorClass>problems.tsp.score.TspIncrementalScoreCalculator</incrementalScoreCalculatorClass>-->
         </scoreDirectorFactory>
         <termination>
-            <secondsSpentLimit>30</secondsSpentLimit>
+            <secondsSpentLimit>15</secondsSpentLimit>
         </termination>
     </solver>
     </inheritedSolverBenchmark>
-
-    <solverBenchmark>
-        <name>Tabu 1</name>
-        <solver>
-            <constructionHeuristic>FIRST_FIT</constructionHeuristic>
-            <localSearch>
-                TABU_SEARCH
-                <forager>
-                    <acceptedCountLimit>1000</acceptedCountLimit>
-                </forager>
-                <acceptor>
-                    <entityTabuRatio>0.05</entityTabuRatio>
-                </acceptor>
-            </localSearch>
-        </solver>
-    </solverBenchmark>
 
 
     <solverBenchmark>
@@ -49,14 +33,58 @@
             <constructionHeuristic>FIRST_FIT</constructionHeuristic>
             <localSearch>
                 TABU_SEARCH
+                <termination>
+                    <terminationCompositionStyle>OR</terminationCompositionStyle>
+                    <unimprovedStepCountLimit>1000</unimprovedStepCountLimit>
+                    <secondsSpentLimit>10</secondsSpentLimit>
+                </termination>
                 <forager>
                     <acceptedCountLimit>10000</acceptedCountLimit>
                 </forager>
                 <acceptor>
-                    <entityTabuRatio>0.1</entityTabuRatio>
+                    <entityTabuRatio>0.05</entityTabuRatio>
                 </acceptor>
+
+                <unionMoveSelector>
+                    <changeMoveSelector>
+                        <entitySelector id = "entitySelector0"/>
+                        <valueSelector>
+                            <nearbySelection>
+                                <originEntitySelector mimicSelectorRef="entitySelector0"/>
+                                <nearbyDistanceMeterClass>problems.vrp.domain.CustomerNearbyDistanceMeter</nearbyDistanceMeterClass>
+                                <parabolicDistributionSizeMaximum>50</parabolicDistributionSizeMaximum>
+                            </nearbySelection>
+                        </valueSelector>
+                    </changeMoveSelector>
+
+                    <swapMoveSelector>
+                        <entitySelector id = "entitySelector1"/>
+                        <secondaryEntitySelector>
+                            <nearbySelection>
+                                <originEntitySelector mimicSelectorRef="entitySelector1"/>
+                                <nearbyDistanceMeterClass>problems.vrp.domain.CustomerNearbyDistanceMeter</nearbyDistanceMeterClass>
+                                <parabolicDistributionSizeMaximum>50</parabolicDistributionSizeMaximum>
+                            </nearbySelection>
+                        </secondaryEntitySelector>
+                    </swapMoveSelector>
+
+
+                    <tailChainSwapMoveSelector>
+                        <entitySelector id="tailChainSwapMove"/>
+                        <valueSelector>
+                            <nearbySelection>
+                                <originEntitySelector mimicSelectorRef="tailChainSwapMove"/>
+                                <nearbyDistanceMeterClass>problems.vrp.domain.CustomerNearbyDistanceMeter</nearbyDistanceMeterClass>
+                                <parabolicDistributionSizeMaximum>50</parabolicDistributionSizeMaximum>
+                            </nearbySelection>
+                        </valueSelector>
+                    </tailChainSwapMoveSelector>
+                </unionMoveSelector>
             </localSearch>
 
+            <localSearch>
+                SIMULATED_ANNEALING
+            </localSearch>
         </solver>
     </solverBenchmark>
 
@@ -70,4 +98,24 @@
         </solver>
     </solverBenchmark>
 
+
+    <solverBenchmark>
+        <name>Tabu</name>
+        <solver>
+            <constructionHeuristic>FIRST_FIT</constructionHeuristic>
+            <localSearch>
+                TABU
+            </localSearch>
+        </solver>
+    </solverBenchmark>
+
+    <solverBenchmark>
+        <name>Late acceptance</name>
+        <solver>
+            <constructionHeuristic>FIRST_FIT</constructionHeuristic>
+            <localSearch>
+                LATE_ACCEPTANCE
+            </localSearch>
+        </solver>
+    </solverBenchmark>
 </plannerBenchmark>

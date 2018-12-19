@@ -7,7 +7,6 @@ import org.optaplanner.core.api.solver.Solver;
 import org.optaplanner.core.api.solver.SolverFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import problems.tsp.app.TspApp;
 import problems.vrp.domain.VrpSolution;
 import problems.vrp.persistence.VrpProblemGenerator;
 
