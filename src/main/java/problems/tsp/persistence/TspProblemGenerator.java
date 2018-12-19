@@ -1,13 +1,11 @@
 package problems.tsp.persistence;
 
+import org.optaplanner.core.api.score.buildin.hardsoft.HardSoftScore;
 import org.optaplanner.persistence.common.api.domain.solution.SolutionFileIO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import problems.tsp.app.TspApp;
-import problems.tsp.domain.Domicile;
-import problems.tsp.domain.Visit;
-import problems.tsp.domain.Location;
-import problems.tsp.domain.TspSolution;
+import problems.tsp.domain.*;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -100,7 +98,25 @@ public class TspProblemGenerator implements SolutionFileIO<TspSolution> {
 
   @Override
   public void write(TspSolution tspSolution, File file) {
-    LOGGER.warn("Unimplemented method!");
+
+  }
+
+  public String getCourseraOutput(TspSolution tspSolution) {
+    Standstill domicile = tspSolution.getDomicile();
+
+    HardSoftScore score = tspSolution.getScore();
+
+    StringBuilder sb= new StringBuilder();
+    sb.append(score.getSoftScore()).append(" 0\n");
+    while(true) {
+      Standstill next = tspSolution.findNextVisit(domicile);
+      if(next == null) {
+        break;
+      } else {
+        sb.append(((Visit) next).getId());
+      }
+    }
+    return sb.toString();
   }
 
   public TspSolution createTspProblem(Dataset dataset){
