@@ -3,6 +3,7 @@ package problems.tsp.app;
 
 import ch.qos.logback.classic.LoggerContext;
 import ch.qos.logback.core.util.StatusPrinter;
+import org.apache.commons.cli.*;
 import org.optaplanner.benchmark.api.PlannerBenchmark;
 import org.optaplanner.benchmark.api.PlannerBenchmarkFactory;
 import org.optaplanner.core.api.score.buildin.hardsoft.HardSoftScore;
@@ -28,7 +29,7 @@ public class TspApp {
 
     public static final TspProblemGenerator.Dataset DATASET = TspProblemGenerator.Dataset.URUGUAY;
 
-    public static boolean coursera = false;
+    public static boolean coursera = true;
 
     public static void main(String[] args){
 
@@ -38,8 +39,11 @@ public class TspApp {
         // print logback's internal status
         StatusPrinter.print(lc);
 
-
         LOGGER.info("Starting application");
+
+
+        File file = getFile(args);
+
         //build solver
 //        SolverFactory solverFactory = SolverFactory.createFromXmlFile( new File("src/main/resources/problems/tsp/solver/TspSolverConfig_v1.xml"));
         SolverFactory solverFactory = SolverFactory.createFromXmlFile( new File("src/main/resources/problems/tsp/solver/TspSolverConfig_v2.xml"));
@@ -48,7 +52,7 @@ public class TspApp {
 
         //Load Dataset
 //        TspSolution problem = new TspProblemGenerator().createTspProblem(DATASET);
-        TspSolution problem = new TspProblemGenerator().read(new File( "src/main/resources/problems/tsp/data//tsp_99_1"));
+        TspSolution problem = new TspProblemGenerator().read(file);
 
         // solve
         TspSolution solution = solver.solve(problem);
@@ -71,5 +75,26 @@ public class TspApp {
           optimumScore = OPTIMUM_SCORE_URUGUAY;
       }
       LOGGER.info("Score is of best known {}%", String.format("%.2f", optimumScore *1.0/score.getSoftScore()*1.0 * 100));
+    }
+
+    public static File getFile(String[] args) {
+        Options options = new Options();
+        options.addOption("f", true, "file to solve");
+
+        CommandLineParser parser = new DefaultParser();
+        String path = "";
+        try {
+            CommandLine cmd = parser.parse( options, args);
+            path = cmd.getOptionValue("f");
+        } catch (ParseException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Couldn't parse CLI argument");
+        }
+
+        if(path.isEmpty()) {
+            throw new RuntimeException("No path specified");
+        } else {
+            return new File(path);
+        }
     }
 }
