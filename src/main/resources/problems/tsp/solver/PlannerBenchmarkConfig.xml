@@ -11,7 +11,7 @@
             <inputSolutionFile>src/main/resources/problems/tsp/data/zi929.txt</inputSolutionFile>
         </problemBenchmarks>
         <solver>
-            <moveThreadCount>4</moveThreadCount>
+            <moveThreadCount>AUTO</moveThreadCount>
             <scanAnnotatedClasses>
                 <packageInclude>problems.tsp</packageInclude>
             </scanAnnotatedClasses>
@@ -25,67 +25,143 @@
         </solver>
     </inheritedSolverBenchmark>
 
-    <!--<solverBenchmark>-->
-        <!--<name>Brute Force</name>-->
-        <!--<solver>-->
-           <!--<exhaustiveSearch>-->
-               <!--<exhaustiveSearchType>BRUTE_FORCE</exhaustiveSearchType>-->
-           <!--</exhaustiveSearch>-->
-        <!--</solver>-->
-    <!--</solverBenchmark>-->
-
-    <!--<solverBenchmark>-->
-        <!--<name>Branch and Bound</name>-->
-        <!--<solver>-->
-            <!--<exhaustiveSearch>-->
-                <!--<exhaustiveSearchType>BRANCH_AND_BOUND</exhaustiveSearchType>-->
-            <!--</exhaustiveSearch>-->
-        <!--</solver>-->
-    <!--</solverBenchmark>-->
 
     <solverBenchmark>
-        <name>Tabu Search with Late Acceptance</name>
+        <name>Tabu Search v1</name>
+        <solver>
+            <constructionHeuristic>FIRST_FIT</constructionHeuristic>
+            <localSearch>
+                TABU_SEARCH
+                <unionMoveSelector>
+
+                    <changeMoveSelector>
+                        <entitySelector id = "entitySelector0"/>
+                        <valueSelector>
+                            <nearbySelection>
+                                <originEntitySelector mimicSelectorRef="entitySelector0"/>
+                                <nearbyDistanceMeterClass>problems.tsp.domain.CustomerNearbyDistanceMeter</nearbyDistanceMeterClass>
+                                <linearDistributionSizeMaximum>50</linearDistributionSizeMaximum>
+                            </nearbySelection>
+                        </valueSelector>
+                    </changeMoveSelector>
+
+                    <swapMoveSelector>
+                        <entitySelector id = "entitySelector1"/>
+                        <secondaryEntitySelector>
+                            <nearbySelection>
+                                <originEntitySelector mimicSelectorRef="entitySelector1"/>
+                                <nearbyDistanceMeterClass>problems.tsp.domain.CustomerNearbyDistanceMeter</nearbyDistanceMeterClass>
+                                <linearDistributionSizeMaximum>50</linearDistributionSizeMaximum>
+                            </nearbySelection>
+                        </secondaryEntitySelector>
+                    </swapMoveSelector>
+
+                    <tailChainSwapMoveSelector>
+                        <entitySelector id="tailChainSwapMove"/>
+                        <valueSelector>
+                            <nearbySelection>
+                                <originEntitySelector mimicSelectorRef="tailChainSwapMove"/>
+                                <nearbyDistanceMeterClass>problems.tsp.domain.CustomerNearbyDistanceMeter</nearbyDistanceMeterClass>
+                                <parabolicDistributionSizeMaximum>50</parabolicDistributionSizeMaximum>
+                            </nearbySelection>
+                        </valueSelector>
+                    </tailChainSwapMoveSelector>
+
+                </unionMoveSelector>
+            </localSearch>
+        </solver>
+    </solverBenchmark>
+
+    <solverBenchmark>
+        <name>Tabu Search v2</name>
+        <solver>
+            <constructionHeuristic>FIRST_FIT</constructionHeuristic>
+            <localSearch>
+                TABU_SEARCH
+                <forager>
+                    <acceptedCountLimit>1000</acceptedCountLimit>
+                </forager>
+                <acceptor>
+                    <entityTabuRatio>0.05</entityTabuRatio>
+                </acceptor>
+
+                <unionMoveSelector>
+                    <changeMoveSelector>
+                        <entitySelector id = "entitySelector0"/>
+                        <valueSelector>
+                            <nearbySelection>
+                                <originEntitySelector mimicSelectorRef="entitySelector0"/>
+                                <nearbyDistanceMeterClass>problems.tsp.domain.CustomerNearbyDistanceMeter</nearbyDistanceMeterClass>
+                                <linearDistributionSizeMaximum>50</linearDistributionSizeMaximum>
+                            </nearbySelection>
+                        </valueSelector>
+                    </changeMoveSelector>
+
+                    <tailChainSwapMoveSelector>
+                        <entitySelector id="tailChainSwapMove"/>
+                        <valueSelector>
+                            <nearbySelection>
+                                <originEntitySelector mimicSelectorRef="tailChainSwapMove"/>
+                                <nearbyDistanceMeterClass>problems.tsp.domain.CustomerNearbyDistanceMeter</nearbyDistanceMeterClass>
+                                <parabolicDistributionSizeMaximum>50</parabolicDistributionSizeMaximum>
+                            </nearbySelection>
+                        </valueSelector>
+                    </tailChainSwapMoveSelector>
+                </unionMoveSelector>
+            </localSearch>
+        </solver>
+    </solverBenchmark>
+
+    <solverBenchmark>
+        <name>Tabu Search v3</name>
+        <solver>
+            <constructionHeuristic>FIRST_FIT</constructionHeuristic>
+            <localSearch>
+                TABU_SEARCH
+                <forager>
+                    <acceptedCountLimit>10000</acceptedCountLimit>
+                </forager>
+                <acceptor>
+                    <entityTabuRatio>0.1</entityTabuRatio>
+                </acceptor>
+
+                <unionMoveSelector>
+                    <changeMoveSelector>
+                        <entitySelector id = "entitySelector0"/>
+                        <valueSelector>
+                            <nearbySelection>
+                                <originEntitySelector mimicSelectorRef="entitySelector0"/>
+                                <nearbyDistanceMeterClass>problems.tsp.domain.CustomerNearbyDistanceMeter</nearbyDistanceMeterClass>
+                                <parabolicDistributionSizeMaximum>50</parabolicDistributionSizeMaximum>
+                            </nearbySelection>
+                        </valueSelector>
+                    </changeMoveSelector>
+
+                    <tailChainSwapMoveSelector>
+                        <entitySelector id="tailChainSwapMove"/>
+                        <valueSelector>
+                            <nearbySelection>
+                                <originEntitySelector mimicSelectorRef="tailChainSwapMove"/>
+                                <nearbyDistanceMeterClass>problems.tsp.domain.CustomerNearbyDistanceMeter</nearbyDistanceMeterClass>
+                                <parabolicDistributionSizeMaximum>50</parabolicDistributionSizeMaximum>
+                            </nearbySelection>
+                        </valueSelector>
+                    </tailChainSwapMoveSelector>
+                </unionMoveSelector>
+            </localSearch>
+        </solver>
+    </solverBenchmark>
+
+    <solverBenchmark>
+        <name>Tabu Search</name>
         <solver>
             <constructionHeuristic>FIRST_FIT</constructionHeuristic>
             <localSearch>
                 TABU_SEARCH
             </localSearch>
-            <localSearch>
-                LATE_ACCEPTANCE
-            </localSearch>
         </solver>
     </solverBenchmark>
 
-    <solverBenchmark>
-
-        <name>Simulated Annealing</name>
-        <solver>
-            <constructionHeuristic>FIRST_FIT</constructionHeuristic>
-            <localSearch>SIMULATED_ANNEALING </localSearch>
-        </solver>
-    </solverBenchmark>
-
-    <solverBenchmark>
-        <name>Late Acceptance</name>
-        <solver>
-            <constructionHeuristic>FIRST_FIT</constructionHeuristic>
-            <localSearch>
-                LATE_ACCEPTANCE
-            </localSearch>
-        </solver>
-    </solverBenchmark>
-
-    <!--<solverBenchmark>-->
-        <!--<name>Variable Neighborhood Descent</name>-->
-        <!--<solver>-->
-            <!--<constructionHeuristic>FIRST_FIT</constructionHeuristic>-->
-            <!--<localSearch>-->
-                <!--VARIABLE_NEIGHBORHOOD_DESCENT-->
-                <!--<swapMoveSelector/>-->
-            <!--</localSearch>-->
-
-        <!--</solver>-->
-    <!--</solverBenchmark>-->
 
     <benchmarkReport>
         <solverRankingType>TOTAL_SCORE</solverRankingType>

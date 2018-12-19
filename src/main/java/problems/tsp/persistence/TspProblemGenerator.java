@@ -3,6 +3,7 @@ package problems.tsp.persistence;
 import org.optaplanner.persistence.common.api.domain.solution.SolutionFileIO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import problems.tsp.app.TspApp;
 import problems.tsp.domain.Domicile;
 import problems.tsp.domain.Visit;
 import problems.tsp.domain.Location;
@@ -45,7 +46,15 @@ public class TspProblemGenerator implements SolutionFileIO<TspSolution> {
     int lineNumber = 1;
     String line;
     int count = 0;
-    int startLine = 8;
+    int startLine;
+
+    if (file.getName().endsWith(inputFileExtension)) {
+      startLine = 8;
+    } else {
+      startLine = 2;
+      TspApp.coursera = true;
+    }
+
 
     try {
       BufferedReader br = new BufferedReader(new FileReader(file));
@@ -53,7 +62,13 @@ public class TspProblemGenerator implements SolutionFileIO<TspSolution> {
       while((line = br.readLine()) != null && !line.contains("EOF")){
         if( lineNumber >= startLine){
           String[] splitted = line.split(" ");
-          Location location = new Location(Integer.valueOf(splitted[0]), Double.valueOf(splitted[1]), Double.valueOf(splitted[2]));
+          Location location;
+          if (TspApp.coursera) {
+            location = new Location(count-1, Double.valueOf(splitted[0]), Double.valueOf(splitted[1]));
+          } else {
+            location = new Location(Integer.valueOf(splitted[0]), Double.valueOf(splitted[1]), Double.valueOf(splitted[2]));
+
+          }
 
           // Note that the non-variable fields need to be set as planner does not configure these
           if(count == 0) {

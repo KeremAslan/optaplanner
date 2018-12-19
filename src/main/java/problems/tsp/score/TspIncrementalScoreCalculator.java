@@ -14,6 +14,7 @@ public class TspIncrementalScoreCalculator extends AbstractIncrementalScoreCalcu
 
     private int score;
 
+    //TODO implement coursera eval method
     @Override
     public void resetWorkingSolution(TspSolution tspSolution) {
         domicile = tspSolution.getDomicile();

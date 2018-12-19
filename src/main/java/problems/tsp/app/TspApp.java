@@ -26,7 +26,9 @@ public class TspApp {
 
     public static final Logger LOGGER = LoggerFactory.getLogger(TspApp.class);
 
-    public static final TspProblemGenerator.Dataset DATASET = TspProblemGenerator.Dataset.WESTERN_SAHARA;
+    public static final TspProblemGenerator.Dataset DATASET = TspProblemGenerator.Dataset.URUGUAY;
+
+    public static boolean coursera = false;
 
     public static void main(String[] args){
 
@@ -43,20 +45,15 @@ public class TspApp {
         SolverFactory solverFactory = SolverFactory.createFromXmlFile( new File("src/main/resources/problems/tsp/solver/TspSolverConfig_v2.xml"));
 
         Solver<TspSolution> solver = solverFactory.buildSolver();
-        SolverConfig solverConfig = solverFactory.getSolverConfig();
-
-        PlannerBenchmarkFactory benchmarkFactory = PlannerBenchmarkFactory.createFromSolverFactory(solverFactory);
-
 
         //Load Dataset
-        TspSolution problem = new TspProblemGenerator().createTspProblem(DATASET);
+//        TspSolution problem = new TspProblemGenerator().createTspProblem(DATASET);
+        TspSolution problem = new TspProblemGenerator().read(new File( "src/main/resources/problems/tsp/data//tsp_99_1"));
 
         // solve
         TspSolution solution = solver.solve(problem);
         HardSoftScore score = solution.getScore();
 
-        PlannerBenchmark plannerBenchmark = benchmarkFactory.buildPlannerBenchmark(solution, problem);
-//        plannerBenchmark.benchmark();
         LOGGER.info("Best found solution is {}",  score);
         LOGGER.info("Solution {}", solution);
 
