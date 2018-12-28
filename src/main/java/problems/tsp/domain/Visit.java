@@ -2,8 +2,7 @@ package problems.tsp.domain;
 
 import org.optaplanner.core.api.domain.entity.PlanningEntity;
 import org.optaplanner.core.api.domain.lookup.PlanningId;
-import org.optaplanner.core.api.domain.variable.PlanningVariable;
-import org.optaplanner.core.api.domain.variable.PlanningVariableGraphType;
+import org.optaplanner.core.api.domain.variable.*;
 
 import java.io.Serializable;
 
@@ -14,6 +13,10 @@ public class Visit implements Standstill, Serializable {
     private Integer id;
 
     private Location location;
+    private Integer position;
+
+    private Visit nextVisit;
+
 
     //Planning variable: changes during planning. (Location is set only once!)
     private Standstill previousStandstill;
@@ -60,6 +63,27 @@ public class Visit implements Standstill, Serializable {
     public void setId(Integer id) {
         this.id = id;
     }
+
+    @CustomShadowVariable(variableListenerClass = PositionListener.class,
+            sources = {@PlanningVariableReference(variableName = "previousStandstill")})
+    public Integer getPosition() {
+        return position;
+    }
+
+    public void setPosition(Integer position) {
+        this.position = position;
+    }
+
+//    @Override
+//    @InverseRelationShadowVariable(sourceVariableName = "previousStandstill")
+//    public Visit getNextVisit() {
+//        return null;
+//    }
+//
+//    @Override
+//    public void setNextVisit(Visit visit) {
+//        this.nextVisit = visit;
+//    }
 
     @Override
     public double getDistanceTo(Standstill standstill) {

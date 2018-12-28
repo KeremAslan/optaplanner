@@ -82,7 +82,7 @@ public class TspApp {
         options.addOption("f", true, "file to solve");
 
         CommandLineParser parser = new DefaultParser();
-        String path = "";
+        String path;
         try {
             CommandLine cmd = parser.parse( options, args);
             path = cmd.getOptionValue("f");

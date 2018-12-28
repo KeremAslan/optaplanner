@@ -2,6 +2,7 @@ package problems.tsp.domain;
 
 
 import org.optaplanner.core.api.domain.lookup.PlanningId;
+import org.optaplanner.core.api.domain.variable.InverseRelationShadowVariable;
 
 import java.io.Serializable;
 
@@ -14,6 +15,8 @@ public class Domicile implements Standstill, Serializable {
   private Integer id;
 
   private Location location;
+
+//  private Visit nextVisit;
 
 
   @Override
@@ -36,6 +39,17 @@ public class Domicile implements Standstill, Serializable {
         "location=" + location +
         '}';
   }
+
+//    @Override
+//    @InverseRelationShadowVariable(sourceVariableName = "previousLocation")
+//    public Visit getNextVisit() {
+//        return nextVisit;
+//    }
+//
+//    @Override
+//    public void setNextVisit(Visit visit) {
+//        this.nextVisit = visit;
+//    }
 
     @PlanningId
     public Integer getId() {

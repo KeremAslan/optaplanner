@@ -46,9 +46,15 @@ public class TspProblemGenerator implements SolutionFileIO<TspSolution> {
     int count = 0;
     int startLine;
 
+    String delimiter = " ";
     if (file.getName().endsWith(inputFileExtension)) {
       startLine = 8;
-    } else {
+
+    } else if (file.getName().endsWith(".csv")) {
+      startLine = 2;
+      delimiter = ",";
+    }
+    else {
       startLine = 2;
       TspApp.coursera = true;
     }
@@ -59,13 +65,12 @@ public class TspProblemGenerator implements SolutionFileIO<TspSolution> {
 
       while((line = br.readLine()) != null && !line.contains("EOF")){
         if( lineNumber >= startLine){
-          String[] splitted = line.split(" ");
+          String[] splitted = line.split(delimiter);
           Location location;
           if (TspApp.coursera) {
             location = new Location(count-1, Double.valueOf(splitted[0]), Double.valueOf(splitted[1]));
           } else {
             location = new Location(Integer.valueOf(splitted[0]), Double.valueOf(splitted[1]), Double.valueOf(splitted[2]));
-
           }
 
           // Note that the non-variable fields need to be set as planner does not configure these
