@@ -41,9 +41,8 @@ public class PositionListener implements VariableListener<Visit> {
         Domicile domicile = tspSolution.getDomicile();
 
         Integer position = visit.getPosition();
-        if(position != null) {
 
-        }
+
 
     }
 }

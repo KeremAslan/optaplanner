@@ -77,7 +77,7 @@ public class Visit implements Standstill, Serializable {
 //    @Override
 //    @InverseRelationShadowVariable(sourceVariableName = "previousStandstill")
 //    public Visit getNextVisit() {
-//        return null;
+//        return nextVisit;
 //    }
 //
 //    @Override
