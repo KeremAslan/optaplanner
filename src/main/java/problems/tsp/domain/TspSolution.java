@@ -98,9 +98,13 @@ public class TspSolution implements Serializable {
 
         while (true) {
             sb.append(standstill.getLocation().getId());
-            standstill = findNextVisit(standstill);
+//            Visit nextVisit = standstill.getNextVisit();
+            standstill = standstill.getNextVisit();
+//            standstill = findNextVisit(standstill);
+
             if (standstill != null) {
                 sb.append("-");
+//                sb.append("(n:").append(nextVisit.getLocation().getId()).append(")");
             } else {
                 break;
             }

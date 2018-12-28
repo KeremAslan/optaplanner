@@ -44,16 +44,15 @@ public class Domicile implements Standstill, Serializable {
         '}';
   }
 
-//    @Override
-//    @InverseRelationShadowVariable(sourceVariableName = "previousStandstill")
-//    public Visit getNextVisit() {
-//        return nextVisit;
-//    }
-//
-//    @Override
-//    public void setNextVisit(Visit visit) {
-//        this.nextVisit = visit;
-//    }
+    @Override
+    public Visit getNextVisit() {
+        return nextVisit;
+    }
+
+    @Override
+    public void setNextVisit(Visit visit) {
+        this.nextVisit = visit;
+    }
 
 
     @CustomShadowVariable(variableListenerClass = PositionListener.class,

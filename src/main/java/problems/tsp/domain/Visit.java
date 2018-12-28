@@ -74,16 +74,15 @@ public class Visit implements Standstill, Serializable {
         this.position = position;
     }
 
-//    @Override
-//    @InverseRelationShadowVariable(sourceVariableName = "previousStandstill")
-//    public Visit getNextVisit() {
-//        return nextVisit;
-//    }
-//
-//    @Override
-//    public void setNextVisit(Visit visit) {
-//        this.nextVisit = visit;
-//    }
+    @Override
+    public Visit getNextVisit() {
+        return nextVisit;
+    }
+
+    @Override
+    public void setNextVisit(Visit visit) {
+        this.nextVisit = visit;
+    }
 
     @Override
     public double getDistanceTo(Standstill standstill) {
