@@ -54,9 +54,7 @@ public class Domicile implements Standstill, Serializable {
         this.nextVisit = visit;
     }
 
-
-    @CustomShadowVariable(variableListenerClass = PositionListener.class,
-            sources = {@PlanningVariableReference(variableName = "previousStandstill")})
+    @Override
     public Integer getPosition() {
         return position;
     }

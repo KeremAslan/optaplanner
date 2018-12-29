@@ -13,7 +13,7 @@ public class PositionListener implements VariableListener<Visit> {
 
     @Override
     public void afterEntityAdded(ScoreDirector scoreDirector, Visit visit) {
-
+        updatePosition(scoreDirector, visit);
     }
 
     @Override
@@ -23,7 +23,7 @@ public class PositionListener implements VariableListener<Visit> {
 
     @Override
     public void afterVariableChanged(ScoreDirector scoreDirector, Visit visit) {
-
+        updatePosition(scoreDirector, visit);
     }
 
     @Override
@@ -36,12 +36,31 @@ public class PositionListener implements VariableListener<Visit> {
 
     }
 
+    // NOTE position of domicile is not set  as this is never updated!
     private void updatePosition(ScoreDirector scoreDirector, Visit visit) {
-        TspSolution tspSolution = (TspSolution) scoreDirector.getWorkingSolution();
-        Domicile domicile = tspSolution.getDomicile();
+        Standstill standstill = visit;
+        Standstill previousStandstill = visit.getPreviousStandstill();
 
-        Integer position = visit.getPosition();
+        Integer previousStandstillPostition;
 
+        if (previousStandstill == null) {
+            previousStandstillPostition = null;
+        } else if (previousStandstill instanceof Domicile) {
+            previousStandstillPostition = 1;
+        } else {
+            previousStandstillPostition = previousStandstill.getPosition();
+        }
+
+        if (previousStandstillPostition != null) {
+            do {
+                scoreDirector.beforeVariableChanged(visit, "position");
+                int currentPosition = previousStandstillPostition + 1;
+                standstill.setPosition(currentPosition);
+                scoreDirector.afterVariableChanged(visit, "position");
+                standstill = standstill.getNextVisit();
+                previousStandstillPostition = currentPosition;
+            } while (standstill != null);
+        }
 
 
     }

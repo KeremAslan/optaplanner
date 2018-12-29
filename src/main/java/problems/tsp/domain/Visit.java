@@ -64,12 +64,15 @@ public class Visit implements Standstill, Serializable {
         this.id = id;
     }
 
+
+    @Override
     @CustomShadowVariable(variableListenerClass = PositionListener.class,
             sources = {@PlanningVariableReference(variableName = "previousStandstill")})
     public Integer getPosition() {
         return position;
     }
 
+    @Override
     public void setPosition(Integer position) {
         this.position = position;
     }

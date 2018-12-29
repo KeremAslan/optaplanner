@@ -92,19 +92,15 @@ public class TspSolution implements Serializable {
         sb.append("TspSolution{# ");
 
         sb.append(visits.size()+1).append("[");
-
-
         Standstill standstill = domicile;
 
         while (true) {
+            sb.append(standstill.getPosition()).append(":");
             sb.append(standstill.getLocation().getId());
-//            Visit nextVisit = standstill.getNextVisit();
             standstill = standstill.getNextVisit();
-//            standstill = findNextVisit(standstill);
-
             if (standstill != null) {
-                sb.append("-");
-//                sb.append("(n:").append(nextVisit.getLocation().getId()).append(")");
+                sb.append(",");
+
             } else {
                 break;
             }
