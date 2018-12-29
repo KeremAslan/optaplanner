@@ -32,12 +32,8 @@ public class TspKaggleEasyCalculator implements EasyScoreCalculator<TspSolution>
         alreadyVisited.add(domicile);
         Standstill lastVisit = domicile;
         while (lastVisit.getNextVisit() != null) {
-            // TODO implement penalty! using shadow variables
-//            hardScore -= penalty;
             Standstill nextVisit = lastVisit.getNextVisit();
             int penalty = 0;
-//            boolean cond1 = nextVisit.getPosition() % 10 == 0;
-//            boolean cond2 = nextVisit.getLocation().getId() % 10 != 0;
             if (nextVisit.getPosition() % 10 == 0 && nextVisit.getLocation().getId() % 10 != 0) {
                 penalty = 1;
             }
@@ -46,8 +42,6 @@ public class TspKaggleEasyCalculator implements EasyScoreCalculator<TspSolution>
                 alreadyVisited.add(nextVisit);
                 doubleVisits++;
             }
-//            softScore -= lastVisit.getDistanceTo(nextVisit);
-
             softScore -= ((Visit) nextVisit).getDistanceFromPreviousStandstill();
             lastVisit = nextVisit;
 
