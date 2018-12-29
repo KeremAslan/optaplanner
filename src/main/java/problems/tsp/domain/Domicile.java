@@ -65,7 +65,7 @@ public class Domicile implements Standstill, Serializable {
         this.position = position;
     }
 
-    @PlanningId
+//    @PlanningId
     public Integer getId() {
         return id;
     }

@@ -4,23 +4,27 @@
         <packageInclude>problems.tsp</packageInclude>
     </scanAnnotatedClasses>
     <scoreDirectorFactory>
-        <incrementalScoreCalculatorClass>problems.tsp.score.TspIncrementalScoreCalculator</incrementalScoreCalculatorClass>
+        <!--<incrementalScoreCalculatorClass>problems.tsp.score.TspIncrementalScoreCalculator</incrementalScoreCalculatorClass>-->
+        <easyScoreCalculatorClass>problems.tsp.score.kaggle.TspKaggleEasyCalculator</easyScoreCalculatorClass>
+        <initializingScoreTrend>ONLY_DOWN</initializingScoreTrend>
     </scoreDirectorFactory>
 
     <constructionHeuristic>
-        <changeMoveSelector>
-            <selectedCountLimit>1000</selectedCountLimit>
-        </changeMoveSelector>
+        <constructionHeuristicType>FIRST_FIT</constructionHeuristicType>
+        <!--<unionMoveSelector>-->
+            <!--<changeMoveSelector/>-->
+        <!--</unionMoveSelector>-->
     </constructionHeuristic>
 
-    <termination>
-        <secondsSpentLimit>20</secondsSpentLimit>
-    </termination>
+    <!--<termination>-->
+        <!--<secondsSpentLimit>5</secondsSpentLimit>-->
+        <!--&lt;!&ndash;<minutesSpentLimit>20</minutesSpentLimit>&ndash;&gt;-->
+    <!--</termination>-->
     <localSearch>
         <!--<localSearchType>TABU_SEARCH</localSearchType>-->
         <termination>
             <terminationCompositionStyle>OR</terminationCompositionStyle>
-            <secondsSpentLimit>600</secondsSpentLimit>
+            <secondsSpentLimit>5</secondsSpentLimit>
             <unimprovedStepCountLimit>2000</unimprovedStepCountLimit>
         </termination>
         <unionMoveSelector>

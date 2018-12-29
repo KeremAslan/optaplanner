@@ -4,20 +4,16 @@ package problems.tsp.app;
 import ch.qos.logback.classic.LoggerContext;
 import ch.qos.logback.core.util.StatusPrinter;
 import org.apache.commons.cli.*;
-import org.optaplanner.benchmark.api.PlannerBenchmark;
-import org.optaplanner.benchmark.api.PlannerBenchmarkFactory;
 import org.optaplanner.core.api.score.buildin.hardsoft.HardSoftScore;
 import org.optaplanner.core.api.solver.Solver;
 import org.optaplanner.core.api.solver.SolverFactory;
 
-import org.optaplanner.core.config.solver.SolverConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import problems.tsp.domain.TspSolution;
 import problems.tsp.persistence.TspProblemGenerator;
 
 import java.io.File;
-import javax.xml.crypto.Data;
 
 public class TspApp {
 
@@ -29,7 +25,8 @@ public class TspApp {
 
     public static final TspProblemGenerator.Dataset DATASET = TspProblemGenerator.Dataset.URUGUAY;
 
-    public static boolean coursera = true;
+    public static boolean coursera = false;
+    static String fileToWriteTo = null;
 
     public static void main(String[] args){
 
@@ -41,7 +38,6 @@ public class TspApp {
 
         LOGGER.info("Starting application");
 
-
         File file = getFile(args);
 
         //build solver
@@ -51,8 +47,9 @@ public class TspApp {
         Solver<TspSolution> solver = solverFactory.buildSolver();
 
         //Load Dataset
+        TspProblemGenerator problemGenerator = new TspProblemGenerator();
 //        TspSolution problem = new TspProblemGenerator().createTspProblem(DATASET);
-        TspSolution problem = new TspProblemGenerator().read(file);
+        TspSolution problem = problemGenerator.read(file);
 
         // solve
         TspSolution solution = solver.solve(problem);
@@ -61,6 +58,9 @@ public class TspApp {
         LOGGER.info("Best found solution is {}",  score);
         LOGGER.info("Solution {}", solution);
 
+        if (fileToWriteTo != null) {
+            problemGenerator.write(solution, new File (fileToWriteTo));
+        }
         printScoreInPerc(score);
 
     }
@@ -80,12 +80,16 @@ public class TspApp {
     public static File getFile(String[] args) {
         Options options = new Options();
         options.addOption("f", true, "file to solve");
+        options.addOption("w", true, "file to write to");
 
         CommandLineParser parser = new DefaultParser();
         String path;
         try {
             CommandLine cmd = parser.parse( options, args);
             path = cmd.getOptionValue("f");
+            if (cmd.hasOption("f")) {
+                fileToWriteTo = cmd.getOptionValue("w");
+            }
         } catch (ParseException e) {
             e.printStackTrace();
             throw new RuntimeException("Couldn't parse CLI argument");

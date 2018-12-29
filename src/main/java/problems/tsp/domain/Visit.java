@@ -55,7 +55,7 @@ public class Visit implements Standstill, Serializable {
         }
     }
 
-    @PlanningId
+//    @PlanningId
     public Integer getId() {
         return id;
     }

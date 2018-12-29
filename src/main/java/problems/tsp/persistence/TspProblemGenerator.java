@@ -7,10 +7,7 @@ import org.slf4j.LoggerFactory;
 import problems.tsp.app.TspApp;
 import problems.tsp.domain.*;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -103,6 +100,23 @@ public class TspProblemGenerator implements SolutionFileIO<TspSolution> {
 
   @Override
   public void write(TspSolution tspSolution, File file) {
+    BufferedWriter writer;
+      try {
+        writer = new BufferedWriter(new FileWriter(file));
+        Standstill standstill = tspSolution.getDomicile();
+        writer.write("Path");
+        do {
+          writer.newLine();
+          writer.write(String.valueOf(standstill.getLocation().getId()));
+          standstill = standstill.getNextVisit();
+        } while (standstill.getNextVisit() != null);
+
+        writer.close();
+      } catch (IOException e) {
+        e.printStackTrace();
+        System.exit(2);
+      }
+
 
   }
 
