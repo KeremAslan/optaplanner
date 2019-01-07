@@ -6,7 +6,9 @@ import org.optaplanner.core.api.domain.solution.PlanningSolution;
 import org.optaplanner.core.api.domain.solution.drools.ProblemFactCollectionProperty;
 import org.optaplanner.core.api.domain.solution.drools.ProblemFactProperty;
 import org.optaplanner.core.api.domain.valuerange.ValueRangeProvider;
+import org.optaplanner.core.api.score.Score;
 import org.optaplanner.core.api.score.buildin.hardsoft.HardSoftScore;
+import org.optaplanner.core.api.score.buildin.hardsoftdouble.HardSoftDoubleScore;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -26,7 +28,7 @@ public class TspSolution implements Serializable {
 
     private List<Visit> visits;
 
-    private HardSoftScore score;
+    private HardSoftDoubleScore score;
 
     public TspSolution(){
 
@@ -75,11 +77,11 @@ public class TspSolution implements Serializable {
 
 
     @PlanningScore
-    public HardSoftScore getScore() {
+    public HardSoftDoubleScore getScore() {
         return score;
     }
 
-    public void setScore(HardSoftScore score){
+    public void setScore(HardSoftDoubleScore score){
         this.score = score;
     }
 

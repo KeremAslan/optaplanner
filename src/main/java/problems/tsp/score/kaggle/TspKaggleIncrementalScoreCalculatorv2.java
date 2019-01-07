@@ -44,6 +44,7 @@ public class TspKaggleIncrementalScoreCalculatorv2 extends AbstractIncrementalSc
         } else if( standstill instanceof Domicile){
             // instance of domicile
             // do nothing
+            hardscore--;
         }
     }
 
@@ -66,6 +67,7 @@ public class TspKaggleIncrementalScoreCalculatorv2 extends AbstractIncrementalSc
         } else if( standstill instanceof Domicile){
             // instance of domicile
             // do nothing
+            hardscore++;
         }
     }
 

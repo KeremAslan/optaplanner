@@ -5,11 +5,14 @@ import ch.qos.logback.classic.LoggerContext;
 import ch.qos.logback.core.util.StatusPrinter;
 import org.apache.commons.cli.*;
 import org.optaplanner.core.api.score.buildin.hardsoft.HardSoftScore;
+import org.optaplanner.core.api.score.buildin.hardsoftdouble.HardSoftDoubleScore;
 import org.optaplanner.core.api.solver.Solver;
 import org.optaplanner.core.api.solver.SolverFactory;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import problems.tsp.domain.Domicile;
+import problems.tsp.domain.Standstill;
 import problems.tsp.domain.TspSolution;
 import problems.tsp.persistence.TspProblemGenerator;
 
@@ -53,8 +56,18 @@ public class TspApp {
 
         // solve
         TspSolution solution = solver.solve(problem);
-        HardSoftScore score = solution.getScore();
+        HardSoftDoubleScore score = solution.getScore();
 
+        Domicile domicile = solution.getDomicile();
+        Standstill s = domicile.getNextVisit();
+        int hardPenalties = 0;
+        while (s != null) {
+            if (s.getPosition() % 10 == 0 && s.getLocation().getId() % 10 != 0) {
+                hardPenalties++;
+            }
+            s = s.getNextVisit();
+        }
+        LOGGER.info("# of hard penalties {}", hardPenalties);
         LOGGER.info("Best found solution is {}",  score);
         LOGGER.info("Solution {}", solution);
 
@@ -65,7 +78,7 @@ public class TspApp {
 
     }
 
-    public static void printScoreInPerc(HardSoftScore score) {
+    public static void printScoreInPerc(HardSoftDoubleScore score) {
       int optimumScore = 0;
       if (TspProblemGenerator.Dataset.WESTERN_SAHARA == DATASET) {
         optimumScore = OPTIMUM_SCORE_WESTERN_SAHARA;

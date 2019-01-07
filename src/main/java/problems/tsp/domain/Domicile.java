@@ -1,6 +1,7 @@
 package problems.tsp.domain;
 
 
+import org.optaplanner.core.api.domain.entity.PlanningPin;
 import org.optaplanner.core.api.domain.lookup.PlanningId;
 import org.optaplanner.core.api.domain.variable.CustomShadowVariable;
 import org.optaplanner.core.api.domain.variable.InverseRelationShadowVariable;
@@ -12,6 +13,7 @@ import java.io.Serializable;
  * A domicile represents the home of a "salesman" and is an "anchor" in a list of chain.
  * Therefore it has no previousStandstill.
  */
+
 public class Domicile implements Standstill, Serializable {
 
   private Integer id;
@@ -21,6 +23,8 @@ public class Domicile implements Standstill, Serializable {
   private Integer position;
 
   private Visit nextVisit;
+
+  private boolean isPinned;
 
 
   @Override
@@ -70,5 +74,15 @@ public class Domicile implements Standstill, Serializable {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    @Override
+    public boolean isPinned() {
+        return isPinned;
+    }
+
+//    @Override
+    public void setPinned(boolean isPinned) {
+        this.isPinned = isPinned;
     }
 }

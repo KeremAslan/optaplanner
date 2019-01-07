@@ -1,6 +1,8 @@
 package problems.tsp.persistence;
 
+import org.optaplanner.core.api.score.Score;
 import org.optaplanner.core.api.score.buildin.hardsoft.HardSoftScore;
+import org.optaplanner.core.api.score.buildin.hardsoftdouble.HardSoftDoubleScore;
 import org.optaplanner.persistence.common.api.domain.solution.SolutionFileIO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -76,11 +78,15 @@ public class TspProblemGenerator implements SolutionFileIO<TspSolution> {
 
             domicile.setId(count);
             domicile.setLocation(location);
+            // TODO make this a configuration parameter
+            domicile.setPinned(true);
             tspSolution.setDomicile(domicile);
           } else {
             Visit visit = new Visit();
             visit.setLocation(location);
             locations.add(location);
+            // TODO make this a configuration parameter
+            visit.setPinned(false);
             visits.add(visit);
             visit.setId(count);
           }
@@ -123,7 +129,7 @@ public class TspProblemGenerator implements SolutionFileIO<TspSolution> {
   public String getCourseraOutput(TspSolution tspSolution) {
     Standstill domicile = tspSolution.getDomicile();
 
-    HardSoftScore score = tspSolution.getScore();
+    HardSoftDoubleScore score = tspSolution.getScore();
 
     StringBuilder sb= new StringBuilder();
     sb.append(score.getSoftScore()).append(" 0\n");

@@ -38,6 +38,7 @@ public class PositionListener implements VariableListener<Visit> {
 
     // NOTE position of domicile is not set  as this is never updated!
     private void updatePosition(ScoreDirector scoreDirector, Visit visit) {
+
         Standstill standstill = visit;
         Standstill previousStandstill = visit.getPreviousStandstill();
 

@@ -17,6 +17,7 @@ public class Visit implements Standstill, Serializable {
 
     private Visit nextVisit;
 
+    private boolean isPinned;
 
     //Planning variable: changes during planning. (Location is set only once!)
     private Standstill previousStandstill;
@@ -93,10 +94,22 @@ public class Visit implements Standstill, Serializable {
     }
 
     @Override
+    public boolean isPinned() {
+        return isPinned;
+    }
+
+//    @Override
+    public void setPinned(boolean isPinned) {
+        this.isPinned = isPinned;
+    }
+
+    @Override
     public String toString() {
         return "Visit{" +
             ", location=" + location +
             ", previousStandstill=" + previousStandstill +
             '}';
     }
+
+
 }

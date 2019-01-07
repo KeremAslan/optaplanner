@@ -1,6 +1,7 @@
 package problems.tsp.domain;
 
 import org.optaplanner.core.api.domain.entity.PlanningEntity;
+import org.optaplanner.core.api.domain.entity.PlanningPin;
 import org.optaplanner.core.api.domain.lookup.PlanningId;
 import org.optaplanner.core.api.domain.variable.CustomShadowVariable;
 import org.optaplanner.core.api.domain.variable.InverseRelationShadowVariable;
@@ -21,6 +22,9 @@ public interface Standstill {
   Integer getId();
   void setId(Integer id);
 
+  @PlanningPin
+  boolean isPinned();
+//  void setPinned(boolean setPinned);
 
   Integer getPosition();
   void setPosition(Integer position);
