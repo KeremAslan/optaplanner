@@ -3,17 +3,46 @@
     <scanAnnotatedClasses>
         <packageInclude>problems.tsp</packageInclude>
     </scanAnnotatedClasses>
+
+    <environmentMode>REPRODUCIBLE</environmentMode>
     <scoreDirectorFactory>
-        <!--<incrementalScoreCalculatorClass>problems.tsp.score.TspIncrementalScoreCalculator</incrementalScoreCalculatorClass>-->
-        <easyScoreCalculatorClass>problems.tsp.score.kaggle.TspKaggleEasyCalculator</easyScoreCalculatorClass>
+        <!--<scoreDrl>problems/tsp/solver/tsprules.drl</scoreDrl>-->
+        <!--<incrementalScoreCalculatorClass>problems.tsp.score.kaggle.TspKaggleIncrementalScoreCalculator</incrementalScoreCalculatorClass>-->
+        <easyScoreCalculatorClass>problems.tsp.score.kaggle.TspKaggleEasyCalculatorv2</easyScoreCalculatorClass>
+        <!--<easyScoreCalculatorClass>problems.tsp.score.EasyCalculator</easyScoreCalculatorClass>-->
         <initializingScoreTrend>ONLY_DOWN</initializingScoreTrend>
+        <!--<assertionScoreDirectorFactory>-->
+            <!--<easyScoreCalculatorClass>problems.tsp.score.kaggle.TspKaggleEasyCalculator</easyScoreCalculatorClass>-->
+        <!--</assertionScoreDirectorFactory>-->
     </scoreDirectorFactory>
 
     <constructionHeuristic>
-        <constructionHeuristicType>FIRST_FIT</constructionHeuristicType>
-        <!--<unionMoveSelector>-->
-            <!--<changeMoveSelector/>-->
-        <!--</unionMoveSelector>-->
+        <!--<constructionHeuristicType>FIRST_FIT</constructionHeuristicType>-->
+        <forager>
+            <pickEarlyType>FIRST_FEASIBLE_SCORE_OR_NON_DETERIORATING_HARD</pickEarlyType>
+        </forager>
+
+        <queuedEntityPlacer>
+            <entitySelector id ="entitySelector0">
+                <!--<cacheType>PHASE</cacheType>-->
+            </entitySelector>
+            <changeMoveSelector>
+                <selectedCountLimit>1</selectedCountLimit>
+                <valueSelector>
+                    <nearbySelection>
+                        <originEntitySelector mimicSelectorRef="entitySelector0"/>
+                        <!--<nearbySelectionDistributionType>BLOCK_DISTRIBUTION</nearbySelectionDistributionType>-->
+                        <nearbyDistanceMeterClass>problems.tsp.domain.CustomerNearbyDistanceMeter</nearbyDistanceMeterClass>
+                        <!--<blockDistributionSizeMaximum>10</blockDistributionSizeMaximum>-->
+                        <!--<parabolicDistributionSizeMaximum>50</parabolicDistributionSizeMaximum>-->
+                    </nearbySelection>
+                </valueSelector>
+            </changeMoveSelector>
+        </queuedEntityPlacer>
+
+
+
+
     </constructionHeuristic>
 
     <!--<termination>-->
@@ -25,7 +54,8 @@
         <termination>
             <terminationCompositionStyle>OR</terminationCompositionStyle>
             <secondsSpentLimit>5</secondsSpentLimit>
-            <unimprovedStepCountLimit>2000</unimprovedStepCountLimit>
+            <!--<minutesSpentLimit>30</minutesSpentLimit>-->
+            <unimprovedStepCountLimit>5000</unimprovedStepCountLimit>
         </termination>
         <unionMoveSelector>
             <changeMoveSelector>
@@ -38,16 +68,16 @@
                     </nearbySelection>
                 </valueSelector>
             </changeMoveSelector>
-            <tailChainSwapMoveSelector>
-                <entitySelector id="tailChainSwapMove"/>
-                <valueSelector>
-                    <nearbySelection>
-                        <originEntitySelector mimicSelectorRef="tailChainSwapMove"/>
-                        <nearbyDistanceMeterClass>problems.tsp.domain.CustomerNearbyDistanceMeter</nearbyDistanceMeterClass>
-                        <parabolicDistributionSizeMaximum>70</parabolicDistributionSizeMaximum>
-                    </nearbySelection>
-                </valueSelector>
-            </tailChainSwapMoveSelector>
+            <!--<tailChainSwapMoveSelector>-->
+                <!--<entitySelector id="tailChainSwapMove"/>-->
+                <!--<valueSelector>-->
+                    <!--<nearbySelection>-->
+                        <!--<originEntitySelector mimicSelectorRef="tailChainSwapMove"/>-->
+                        <!--<nearbyDistanceMeterClass>problems.tsp.domain.CustomerNearbyDistanceMeter</nearbyDistanceMeterClass>-->
+                        <!--<parabolicDistributionSizeMaximum>70</parabolicDistributionSizeMaximum>-->
+                    <!--</nearbySelection>-->
+                <!--</valueSelector>-->
+            <!--</tailChainSwapMoveSelector>-->
         </unionMoveSelector>
         <acceptor>
             <entityTabuRatio>0.05</entityTabuRatio>

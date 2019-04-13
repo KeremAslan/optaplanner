@@ -19,6 +19,8 @@ public class Visit implements Standstill, Serializable {
 
     private boolean isPinned;
 
+    private boolean isPrime;
+
     //Planning variable: changes during planning. (Location is set only once!)
     private Standstill previousStandstill;
 
@@ -33,6 +35,7 @@ public class Visit implements Standstill, Serializable {
 
     public void setLocation(Location location) {
         this.location = location;
+
     }
 
 
@@ -54,6 +57,14 @@ public class Visit implements Standstill, Serializable {
             return previousStandstill.getDistanceTo(this);
 //                previousStandstill.getLocation().getDistanceTo(this);
         }
+    }
+
+    /**
+     * Penalize if position is a 10th position and the location is a prime city
+     * @return
+     */
+    public boolean penalize() {
+        return position % 10 == 0 && location.isPrime();
     }
 
 //    @PlanningId
@@ -98,7 +109,8 @@ public class Visit implements Standstill, Serializable {
         return isPinned;
     }
 
-//    @Override
+
+    //    @Override
     public void setPinned(boolean isPinned) {
         this.isPinned = isPinned;
     }
