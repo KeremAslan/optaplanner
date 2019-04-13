@@ -1,0 +1,27 @@
+package rules
+dialect "java"
+
+
+import problems.tsp.domain.Visit
+import org.optaplanner.core.api.score.buildin.hardsoftdouble.HardSoftDoubleScoreHolder;
+import problems.tsp.domain.Domicile;
+
+global HardSoftDoubleScoreHolder scoreHolder;
+
+
+rule "Distance from last Standstill"
+    when 
+        $visit : Visit(previousStandstill != null, $distanceFromPreviousStandstill : distanceFromPreviousStandstill)
+    then
+        scoreHolder.addSoftConstraintMatch(kcontext, -$distanceFromPreviousStandstill);
+end
+
+
+rule "Distance from last visit to domicile"
+    when 
+        $visit : Visit(previousStandstill != null)
+        not Visit(previousStandstill == $visit)
+        $domicile: Domicile()
+    then
+        scoreHolder.addSoftConstraintMatch(kcontext, -$visit.getDistanceTo($domicile));
+end
