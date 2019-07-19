@@ -4,7 +4,7 @@ import org.optaplanner.core.impl.heuristic.selector.common.nearby.NearbyDistance
 import problems.vrp.domain.Customer;
 import problems.vrp.domain.Standstill;
 
-public class CustomerNearbyDistanceMeter extends NearbyDistanceMeter<Customer, Standstill> {
+public class CustomerNearbyDistanceMeter implements NearbyDistanceMeter<Customer, Standstill> {
 
   @Override
   public double getNearbyDistance(Customer customer, Standstill standstill) {
