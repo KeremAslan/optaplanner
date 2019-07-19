@@ -28,7 +28,7 @@ public class VrpEasyScoreCalculator implements EasyScoreCalculator<VrpSolution> 
     }
 
     for(Customer customer: customers) {
-      Standstill previousLocation = customer.getPreviousLocation();
+      Standstill previousLocation = customer.getPreviousStandstill();
 
       if (previousLocation != null) {
         Vehicle vehicle = customer.getVehicle();

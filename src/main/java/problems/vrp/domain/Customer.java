@@ -52,7 +52,7 @@ public class Customer implements Standstill{
   }
 
   @PlanningVariable(valueRangeProviderRefs = {"vehicleRange", "customerRange"}, graphType = PlanningVariableGraphType.CHAINED)
-  public Standstill getPreviousLocation() {
+  public Standstill getPreviousStandstill() {
     return previousLocation;
   }
 

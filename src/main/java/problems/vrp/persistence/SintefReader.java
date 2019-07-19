@@ -6,7 +6,7 @@ import problems.vrp.domain.Depot;
 import problems.vrp.domain.Location;
 import problems.vrp.domain.Vehicle;
 import problems.vrp.domain.VrpSolution;
-import problems.vrp.domain.timewindowed.TimewindowedCustomer;
+import problems.vrp.domain.timewindowed.TimeWindowedCustomer;
 import problems.vrp.domain.timewindowed.TimewindowedDepot;
 import problems.vrp.domain.timewindowed.TimewindowedVehicle;
 import problems.vrp.domain.timewindowed.VrptwSolution;
@@ -84,7 +84,7 @@ public class SintefReader {
             }
           } else if (lineNumber > DEPOT_LINE) {
             Location location = new Location(id, xCoord, yoord);
-            Customer customer = new TimewindowedCustomer(location, readyTime, dueTime, serviceTime, demand);
+            Customer customer = new TimeWindowedCustomer(location, readyTime, dueTime, serviceTime, demand);
             customerList.add(customer);
             locationList.add(location);
           }
