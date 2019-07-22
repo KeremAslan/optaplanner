@@ -4,17 +4,18 @@ import org.optaplanner.core.api.score.Score;
 import org.optaplanner.core.api.score.buildin.hardmediumsoftlong.HardMediumSoftLongScore;
 import org.optaplanner.core.impl.score.director.easy.EasyScoreCalculator;
 import problems.vrp.domain.Customer;
+import problems.vrp.domain.Standstill;
 import problems.vrp.domain.Vehicle;
-import problems.vrp.domain.timewindowed.VrptwSolution;
+import problems.vrp.domain.VrpSolution;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class SintefScoreCalculator implements EasyScoreCalculator<VrptwSolution> {
+public class SintefEasyScoreCalculator implements EasyScoreCalculator<VrpSolution> {
 
   @Override
-  public Score calculateScore(VrptwSolution vrptwSolution) {
+  public Score calculateScore(VrpSolution vrptwSolution) {
 
     int hardScore = 0;
     int numberOfVehicles = 0;
@@ -29,7 +30,19 @@ public class SintefScoreCalculator implements EasyScoreCalculator<VrptwSolution>
     }
 
     for (Customer customer: vrptwSolution.getCustomers()) {
-      totalDistance += customer.getDistanceFromPreviousStandstill();
+      Standstill previousStandstill = customer.getPreviousStandstill();
+
+      Vehicle vehicle = customer.getVehicle();
+
+      if (previousStandstill != null) {
+        totalDistance -= customer.getDistanceFromPreviousStandstill();
+        vehicleDemandMap.put(vehicle, vehicleDemandMap.get(vehicle) + customer.getDemand());
+
+        if (customer.getNextCustomer() != null) {
+          totalDistance -= customer.getLocation().getDistanceTo(vehicle.getDepot().getLocation());
+        }
+      }
+
     }
 
     for (Map.Entry<Vehicle, Integer> entry: vehicleDemandMap.entrySet()) {
