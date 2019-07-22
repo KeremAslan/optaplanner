@@ -12,7 +12,7 @@ public interface Standstill {
 
   Vehicle getVehicle();
 
-  @InverseRelationShadowVariable(sourceVariableName = "previousLocation")
+  @InverseRelationShadowVariable(sourceVariableName = "previousStandstill")
   Customer getNextCustomer();
   void setNextCustomer(Customer nextCustomer);
 }

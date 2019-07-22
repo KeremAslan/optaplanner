@@ -14,6 +14,9 @@ public class TimeWindowedCustomer extends Customer {
 
   private Long arrivalTime;
 
+  public TimeWindowedCustomer() {
+
+  }
 
   public TimeWindowedCustomer(Location location, long startTime, long endTime, long serviceTime, int demand) {
     super.setLocation(location);

@@ -56,12 +56,12 @@ public class Customer implements Standstill{
     return previousLocation;
   }
 
-  public void setPreviousLocation(Standstill previousLocation) {
+  public void setPreviousStandstill(Standstill previousLocation) {
     this.previousLocation = previousLocation;
   }
 
   @Override
-  @AnchorShadowVariable(sourceVariableName = "previousLocation")
+  @AnchorShadowVariable(sourceVariableName = "previousStandstill")
   public Vehicle getVehicle() {
     return vehicle;
   }
