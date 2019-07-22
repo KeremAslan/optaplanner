@@ -5,6 +5,13 @@ public class Depot {
   private Location location;
 
 
+  public Depot () {
+
+  }
+
+  public Depot(Location location) {
+    this.location = location;
+  }
 
   public Location getLocation() {
     return location;

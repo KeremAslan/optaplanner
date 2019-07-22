@@ -75,15 +75,14 @@ public class SintefReader {
           int dueTime = Integer.parseInt(row[DUE_TIME]);
           int serviceTime = Integer.parseInt(row[SERVICE_TIME]);
 
-
+          Location location = new Location(id, xCoord, yoord);
           if (lineNumber == DEPOT_LINE ) {
-            Depot depot = new TimewindowedDepot(readyTime, dueTime);
+            Depot depot = new TimewindowedDepot(location, readyTime, dueTime);
             depotList.add(depot);
             for (Vehicle vehicle: vehicleList) {
               vehicle.setDepot(depot);
             }
           } else if (lineNumber > DEPOT_LINE) {
-            Location location = new Location(id, xCoord, yoord);
             Customer customer = new TimeWindowedCustomer(location, readyTime, dueTime, serviceTime, demand);
             customerList.add(customer);
             locationList.add(location);

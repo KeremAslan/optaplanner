@@ -34,6 +34,7 @@ public class Location {
 
   public double getDistanceTo(Location location) {
     return
+
 //            Math.round(
         Math.sqrt(
             Math.pow(lat -location.getLat(), 2)

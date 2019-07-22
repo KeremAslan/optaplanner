@@ -1,6 +1,7 @@
 package problems.vrp.domain.timewindowed;
 
 import problems.vrp.domain.Depot;
+import problems.vrp.domain.Location;
 
 public class TimewindowedDepot extends Depot {
 
@@ -8,7 +9,8 @@ public class TimewindowedDepot extends Depot {
   private long endTime;
 
 
-  public TimewindowedDepot(long startTime, long endTime) {
+  public TimewindowedDepot(Location location, long startTime, long endTime) {
+    super(location);
     this.startTime = startTime;
     this.endTime = endTime;
   }
