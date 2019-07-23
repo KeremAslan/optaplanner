@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<plannerBenchmark>
+    <benchmarkDirectory>local/data/vrp</benchmarkDirectory>
+    <warmUpSecondsSpentLimit>30</warmUpSecondsSpentLimit>
+    <inheritedSolverBenchmark>
+    <problemBenchmarks>
+        <solutionFileIOClass>problems.vrp.persistence.SintefReaderAdaptor</solutionFileIOClass>
+        <inputSolutionFile>local/data/vrp/sintef/1000_customer_instances/C1_10_1.TXT</inputSolutionFile>
+        <inputSolutionFile>local/data/vrp/sintef/1000_customer_instances/C1_10_2.TXT</inputSolutionFile>
+        <inputSolutionFile>local/data/vrp/sintef/1000_customer_instances/C1_10_2.TXT</inputSolutionFile>
+    </problemBenchmarks>
+
+    <solver>
+        <moveThreadCount>AUTO</moveThreadCount>
+        <scanAnnotatedClasses>
+            <packageInclude>problems.vrp</packageInclude>
+        </scanAnnotatedClasses>
+        <scoreDirectorFactory>
+            <easyScoreCalculatorClass>problems.vrp.score.SintefEasyScoreCalculator</easyScoreCalculatorClass>
+        </scoreDirectorFactory>
+        <termination>
+            <minutesSpentLimit>5</minutesSpentLimit>
+<!--            <secondsSpentLimit>15</secondsSpentLimit>-->
+        </termination>
+        <constructionHeuristic>FIRST_FIT</constructionHeuristic>
+    </solver>
+    </inheritedSolverBenchmark>
+
+
+    <solverBenchmark>
+        <name>Test</name>
+        <solver>
+            <localSearch>
+                <unionMoveSelector>
+                    <changeMoveSelector>
+                        <entitySelector id="entitySelector1"/>
+                        <valueSelector>
+                            <nearbySelection>
+                                <originEntitySelector mimicSelectorRef="entitySelector1"/>
+                                <nearbyDistanceMeterClass>problems.vrp.domain.solver.CustomerNearbyDistanceMeter</nearbyDistanceMeterClass>
+                                <parabolicDistributionSizeMaximum>40</parabolicDistributionSizeMaximum>
+                            </nearbySelection>
+                        </valueSelector>
+                    </changeMoveSelector>
+                    <swapMoveSelector>
+                        <entitySelector id="entitySelector2"/>
+                        <secondaryEntitySelector>
+                            <nearbySelection>
+                                <originEntitySelector mimicSelectorRef="entitySelector2"/>
+                                <nearbyDistanceMeterClass>problems.vrp.domain.solver.CustomerNearbyDistanceMeter</nearbyDistanceMeterClass>
+                                <parabolicDistributionSizeMaximum>40</parabolicDistributionSizeMaximum>
+                            </nearbySelection>
+                        </secondaryEntitySelector>
+                    </swapMoveSelector>
+                    <tailChainSwapMoveSelector>
+                        <entitySelector id="entitySelector3"/>
+                        <valueSelector>
+                            <nearbySelection>
+                                <originEntitySelector mimicSelectorRef="entitySelector3"/>
+                                <nearbyDistanceMeterClass>problems.vrp.domain.solver.CustomerNearbyDistanceMeter</nearbyDistanceMeterClass>
+                                <parabolicDistributionSizeMaximum>40</parabolicDistributionSizeMaximum>
+                            </nearbySelection>
+                        </valueSelector>
+                    </tailChainSwapMoveSelector>
+                </unionMoveSelector>
+                <acceptor>
+                    <entityTabuRatio>0.03</entityTabuRatio>
+                    <moveTabuSize>100</moveTabuSize>
+                </acceptor>
+                <forager>
+                    <acceptedCountLimit>500</acceptedCountLimit>
+                </forager>
+            </localSearch>
+        </solver>
+    </solverBenchmark>
+
+
+</plannerBenchmark>
