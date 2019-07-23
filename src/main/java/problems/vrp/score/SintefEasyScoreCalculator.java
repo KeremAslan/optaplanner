@@ -52,6 +52,10 @@ public class SintefEasyScoreCalculator implements EasyScoreCalculator<VrpSolutio
       if (demand > capacity) {
         hardScore -= (demand - capacity);
       }
+
+      if (demand > 0) {
+        numberOfVehicles--;
+      }
     }
 
     return HardMediumSoftLongScore.valueOf(hardScore, numberOfVehicles, Math.round(totalDistance));
