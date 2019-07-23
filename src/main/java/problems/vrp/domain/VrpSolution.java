@@ -6,6 +6,7 @@ import org.optaplanner.core.api.domain.solution.PlanningSolution;
 import org.optaplanner.core.api.domain.solution.drools.ProblemFactCollectionProperty;
 import org.optaplanner.core.api.domain.solution.drools.ProblemFactProperty;
 import org.optaplanner.core.api.domain.valuerange.ValueRangeProvider;
+import org.optaplanner.core.api.score.buildin.hardmediumsoftlong.HardMediumSoftLongScore;
 import org.optaplanner.core.api.score.buildin.hardsoftdouble.HardSoftDoubleScore;
 
 import java.io.Serializable;
@@ -23,7 +24,7 @@ public class VrpSolution implements Serializable {
 
   private List<Depot> depotList;
 
-  private HardSoftDoubleScore score ;
+  private HardMediumSoftLongScore score ;
 
   public VrpSolution() {
 
@@ -70,11 +71,11 @@ public class VrpSolution implements Serializable {
 
 
   @PlanningScore
-  public HardSoftDoubleScore getScore() {
+  public HardMediumSoftLongScore getScore() {
     return score;
   }
 
-  public void setScore(HardSoftDoubleScore score) {
+  public void setScore(HardMediumSoftLongScore score) {
     this.score = score;
   }
 }
