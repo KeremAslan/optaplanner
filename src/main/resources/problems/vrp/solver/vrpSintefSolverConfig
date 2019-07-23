@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<solver>
+    <scanAnnotatedClasses>
+        <packageInclude>problems.vrp</packageInclude>
+    </scanAnnotatedClasses>
+
+
+    <scoreDirectorFactory>
+        <easyScoreCalculatorClass>problems.vrp.score.SintefEasyScoreCalculator</easyScoreCalculatorClass>
+    </scoreDirectorFactory>
+    <!--Note construction heuristics don't necessarily create feasible solutions-->
+    <constructionHeuristic>FIRST_FIT</constructionHeuristic>
+    <localSearch>TABU_SEARCH</localSearch>
+
+    <moveThreadCount>AUTO</moveThreadCount>
+    <termination>
+        <secondsSpentLimit>15</secondsSpentLimit>
+    </termination>
+
+
+</solver>
