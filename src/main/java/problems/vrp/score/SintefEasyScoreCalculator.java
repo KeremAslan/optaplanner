@@ -47,13 +47,13 @@ public class SintefEasyScoreCalculator implements EasyScoreCalculator<VrpSolutio
 
     for (Map.Entry<Vehicle, Integer> entry: vehicleDemandMap.entrySet()) {
       int capacity = entry.getKey().getCapacity();
-      int demand = entry.getValue();
+      int utilisedCapacity = entry.getValue();
 
-      if (demand > capacity) {
-        hardScore -= (demand - capacity);
+      if (utilisedCapacity > capacity) {
+        hardScore -= (utilisedCapacity - capacity);
       }
 
-      if (demand > 0) {
+      if (utilisedCapacity > 0) {
         numberOfVehicles--;
       }
     }

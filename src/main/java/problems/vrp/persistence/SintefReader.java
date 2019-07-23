@@ -50,7 +50,7 @@ public class SintefReader {
 
       int lineNumber = 1;
 
-
+      int customerCount = 0;
       while ( (line = br.readLine()) != null && !line.contains("EOF")) {
 
         if (lineNumber == VEHICLES_LINE) {
@@ -63,6 +63,7 @@ public class SintefReader {
             Vehicle vehicle = new TimewindowedVehicle();
             //TechDebt: move to constructor instead
             vehicle.setCapacity(vehicleCapacity);
+            vehicle.setPlanningId(String.valueOf(i));
             vehicleList.add(vehicle);
           }
         } else if (lineNumber >= DEPOT_LINE){
@@ -83,7 +84,8 @@ public class SintefReader {
               vehicle.setDepot(depot);
             }
           } else if (lineNumber > DEPOT_LINE) {
-            Customer customer = new TimeWindowedCustomer(location, readyTime, dueTime, serviceTime, demand);
+            customerCount++;
+            Customer customer = new TimeWindowedCustomer(customerCount, location, readyTime, dueTime, serviceTime, demand);
             customerList.add(customer);
             locationList.add(location);
           }

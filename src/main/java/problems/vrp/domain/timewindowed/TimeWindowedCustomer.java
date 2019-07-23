@@ -18,7 +18,8 @@ public class TimeWindowedCustomer extends Customer {
 
   }
 
-  public TimeWindowedCustomer(Location location, long startTime, long endTime, long serviceTime, int demand) {
+  public TimeWindowedCustomer(Integer planningId, Location location, long startTime, long endTime, long serviceTime, int demand) {
+    super.setId(planningId);
     super.setLocation(location);
     super.setDemand(demand);
     this.startTime = startTime;

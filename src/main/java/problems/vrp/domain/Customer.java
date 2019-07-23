@@ -2,6 +2,7 @@ package problems.vrp.domain;
 
 
 import org.optaplanner.core.api.domain.entity.PlanningEntity;
+import org.optaplanner.core.api.domain.lookup.PlanningId;
 import org.optaplanner.core.api.domain.variable.AnchorShadowVariable;
 import org.optaplanner.core.api.domain.variable.PlanningVariable;
 import org.optaplanner.core.api.domain.variable.PlanningVariableGraphType;
@@ -9,7 +10,7 @@ import org.optaplanner.core.api.domain.variable.PlanningVariableGraphType;
 @PlanningEntity
 public class Customer implements Standstill{
 
-
+  @PlanningId
   private Integer id;
   private Location location;
   private int demand;

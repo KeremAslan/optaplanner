@@ -51,7 +51,7 @@ public class VrpProblemGenerator implements SolutionFileIO<VrpSolution> {
 
           //create and set vehicles
           for (int i=0; i<nrVehicles; i++) {
-            Vehicle vehicle = new Vehicle();
+            Vehicle vehicle = new Vehicle(String.valueOf(i));
 
             vehicle.setCapacity(capacity);
             vehicles.add(vehicle);

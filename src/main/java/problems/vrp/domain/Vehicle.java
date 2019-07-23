@@ -1,8 +1,11 @@
 package problems.vrp.domain;
 
-import org.optaplanner.core.api.domain.entity.PlanningEntity;
+import org.optaplanner.core.api.domain.lookup.PlanningId;
 
 public class Vehicle implements Standstill{
+
+  @PlanningId
+  private String planningId;
 
   private int capacity;
   private Depot depot;
@@ -12,6 +15,10 @@ public class Vehicle implements Standstill{
 
   public Vehicle () {
 
+  }
+
+  public Vehicle(String planningId) {
+    this.planningId = planningId;
   }
 
   public int getCapacity() {
@@ -53,5 +60,13 @@ public class Vehicle implements Standstill{
   @Override
   public Vehicle getVehicle() {
     return this;
+  }
+
+  public String getPlanningId() {
+    return planningId;
+  }
+
+  public void setPlanningId(String planningId) {
+    this.planningId = planningId;
   }
 }
