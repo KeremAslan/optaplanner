@@ -8,6 +8,8 @@ import problems.vrp.domain.Vehicle;
 import problems.vrp.domain.timewindowed.TimeWindowedCustomer;
 import problems.vrp.domain.timewindowed.TimewindowedDepot;
 
+import java.util.Objects;
+
 public class ArrivalTimeUpdatingVariableListener implements VariableListener<Customer> {
 
   @Override
@@ -55,7 +57,7 @@ public class ArrivalTimeUpdatingVariableListener implements VariableListener<Cus
     TimeWindowedCustomer customer = sourceCustomer;
     Long arrivalTime = calculateArrivalTime(sourceCustomer, departureTime);
 
-    while (customer != null && !customer.getArrivalTime().equals(arrivalTime)) {
+    while (customer != null && !Objects.equals(customer.getArrivalTime(), equals(arrivalTime))) {
       scoreDirector.beforeVariableChanged(customer, "arrivalTime");
       customer.setArrivalTime(arrivalTime);
       scoreDirector.afterVariableChanged(customer, "arrivalTime");

@@ -1,11 +1,13 @@
 package problems.vrp.domain.timewindowed;
 
+import org.optaplanner.core.api.domain.entity.PlanningEntity;
 import org.optaplanner.core.api.domain.variable.CustomShadowVariable;
 import org.optaplanner.core.api.domain.variable.PlanningVariableReference;
 import problems.vrp.domain.Customer;
 import problems.vrp.domain.Location;
 import problems.vrp.domain.timewindowed.solver.ArrivalTimeUpdatingVariableListener;
 
+@PlanningEntity
 public class TimeWindowedCustomer extends Customer {
 
   private long startTime;
