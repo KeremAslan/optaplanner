@@ -55,11 +55,11 @@ public class ArrivalTimeUpdatingVariableListener implements VariableListener<Cus
     TimeWindowedCustomer customer = sourceCustomer;
     Long arrivalTime = calculateArrivalTime(sourceCustomer, departureTime);
 
-    while (customer != null && !((TimeWindowedCustomer) customer).getArrivalTime().equals(arrivalTime)) {
+    while (customer != null && !customer.getArrivalTime().equals(arrivalTime)) {
       scoreDirector.beforeVariableChanged(customer, "arrivalTime");
-      ((TimeWindowedCustomer) customer).setArrivalTime(arrivalTime);
+      customer.setArrivalTime(arrivalTime);
       scoreDirector.afterVariableChanged(customer, "arrivalTime");
-      departureTime = ((TimeWindowedCustomer) customer).getDepartureTime();
+      departureTime = customer.getDepartureTime();
       customer = (TimeWindowedCustomer) customer.getNextCustomer();
       arrivalTime = calculateArrivalTime(customer, departureTime);
     }

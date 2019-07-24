@@ -72,4 +72,17 @@ public class TimeWindowedCustomer extends Customer {
   public void setServiceTime(long serviceTime) {
     this.serviceTime = serviceTime;
   }
+
+
+  public boolean isArrivalOutsideOfTimeWindow() {
+    return isArrivalBeforeTimeWindow() || isArrivalAfterTimeWindow();
+  }
+
+  public boolean isArrivalBeforeTimeWindow() {
+    return arrivalTime != null && arrivalTime < startTime;
+  }
+
+  public boolean isArrivalAfterTimeWindow() {
+    return arrivalTime != null && arrivalTime > endTime;
+  }
 }

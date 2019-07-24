@@ -20,7 +20,7 @@
             <easyScoreCalculatorClass>problems.vrp.score.SintefEasyScoreCalculator</easyScoreCalculatorClass>
         </scoreDirectorFactory>
         <termination>
-            <minutesSpentLimit>5</minutesSpentLimit>
+            <minutesSpentLimit>1</minutesSpentLimit>
 <!--            <secondsSpentLimit>15</secondsSpentLimit>-->
         </termination>
         <constructionHeuristic>FIRST_FIT</constructionHeuristic>

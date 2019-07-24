@@ -7,6 +7,7 @@ import problems.vrp.domain.Customer;
 import problems.vrp.domain.Standstill;
 import problems.vrp.domain.Vehicle;
 import problems.vrp.domain.VrpSolution;
+import problems.vrp.domain.timewindowed.TimeWindowedCustomer;
 
 import java.util.HashMap;
 import java.util.List;
@@ -40,6 +41,11 @@ public class SintefEasyScoreCalculator implements EasyScoreCalculator<VrpSolutio
 
         if (customer.getNextCustomer() != null) {
           totalDistance -= customer.getLocation().getDistanceTo(vehicle.getDepot().getLocation());
+        }
+
+        TimeWindowedCustomer timeWindowedCustomer = (TimeWindowedCustomer) customer;
+        if(timeWindowedCustomer.isArrivalOutsideOfTimeWindow()) {
+          hardScore--;
         }
       }
 
